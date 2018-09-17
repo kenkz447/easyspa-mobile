@@ -10,7 +10,7 @@ export interface PageProps {
 export type AppRouteComponent = React.ComponentType<PageProps>;
 
 // tslint:disable-next-line:no-any
-export const route = (Component: AppRouteComponent): any => {
+export const route = (Component: AppRouteComponent) => {
     // tslint:disable-next-line:no-string-literal
     const routeProps = Component.defaultProps.routeProps;
 
@@ -18,3 +18,10 @@ export const route = (Component: AppRouteComponent): any => {
         <Route key={routeProps.path} {...routeProps} component={Component} />
     );
 };
+
+export const routeFrom = (Components: AppRouteComponent[]) => Components.reduce(
+    (currenValue, Component) => {
+        return [...currenValue, route(Component)];
+    },
+    []
+);

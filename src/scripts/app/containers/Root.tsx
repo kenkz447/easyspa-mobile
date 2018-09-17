@@ -7,18 +7,23 @@ import { Router } from 'react-router';
 import { Switch } from 'react-router-dom';
 import { AnyAction, Store } from 'redux';
 
-import { AppCoreContext, initAppContext } from '@/app/core';
-import { Auth } from '@/domain';
+import {
+    AppAuthenticator,
+    AppAuthenticatorProps,
+    AppCoreContext,
+    initAppContext
+} from '@/app/core';
 import { eventHandlers } from '@/domain';
 
 export interface RootProps {
     readonly store: Store<string, AnyAction>;
     readonly children: JSX.Element[];
     readonly loginPath: string;
+    readonly Auth: new (props: AppAuthenticatorProps) => AppAuthenticator;
 }
 
 export class Root extends React.Component<RootProps> {
-    readonly authHelper: Auth;
+    readonly authHelper: AppAuthenticator;
     readonly history: History;
 
     readonly state = {
@@ -27,7 +32,7 @@ export class Root extends React.Component<RootProps> {
 
     constructor(props: RootProps) {
         super(props);
-        const { loginPath, store } = props;
+        const { Auth, loginPath, store } = props;
         this.history = createBrowserHistory();
         this.authHelper = new Auth({
             loginPath: loginPath,

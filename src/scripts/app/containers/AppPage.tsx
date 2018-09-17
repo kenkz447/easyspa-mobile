@@ -1,9 +1,13 @@
 import * as React from 'react';
+import { RouteComponentProps } from 'react-router';
 
-import { AppContextServices } from '@/app/core';
+import { AppContextServices, PageProps } from '@/app/core';
 import { eventHandlers } from '@/domain';
 
-export type AppPageProps = Required<Pick<AppContextServices, 'setAppContext'>>;
+export type AppPageProps<T = {}> =
+    Required<Pick<AppContextServices, 'setAppContext'>> &
+    RouteComponentProps<T> &
+    PageProps;
 
 export class AppPage<P extends AppPageProps = AppPageProps, S= {}> extends React.PureComponent<P, S> {
     constructor(props: P) {

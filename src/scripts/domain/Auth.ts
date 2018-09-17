@@ -1,7 +1,7 @@
 import { History } from 'history';
 import * as Cookies from 'js-cookie';
-import { Store } from 'redux';
 
+import { AppAuthenticator, AppAuthenticatorProps } from '@/app';
 import {
     restfulFetcher,
     User,
@@ -12,33 +12,24 @@ import { getUrlSearchParam } from '@/utilities';
 
 export type RoleType = 'Admin' | 'Sale';
 
-interface AuthProps {
-    readonly loginPath: string;
-    readonly history: History;
-    readonly store: Store;
-}
+export class Auth implements AppAuthenticator {
+    static readonly authInstance = Symbol();
 
-export class Auth {
-    // tslint:disable-next-line:readonly-keyword
-    static _instance: Auth;
     static get instance() {
-        return Auth._instance;
+        return Auth[Auth.authInstance];
     }
+
     static set instance(instance: Auth) {
-        if (Auth._instance) {
+        if (Auth[Auth.authInstance]) {
             return;
         }
-        Auth._instance = instance;
+        Auth[Auth.authInstance] = instance;
     }
 
-    // tslint:disable-next-line:readonly-keyword
-    currentUser: User;
+    readonly props: AppAuthenticatorProps;
 
-    readonly props: AuthProps;
-
-    constructor(props: AuthProps) {
+    constructor(props: AppAuthenticatorProps) {
         this.props = props;
-
         Auth.instance = this;
     }
 

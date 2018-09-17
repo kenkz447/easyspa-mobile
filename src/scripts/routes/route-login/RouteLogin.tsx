@@ -1,19 +1,18 @@
 import * as React from 'react';
 
-import { AppPage, AppPageProps, readyState, withAppContext } from '@/app';
+import { AppPage, AppPageProps, withAppContext } from '@/app';
 import { Page } from '@/components';
 import { DefaultLayout } from '@/layout';
 
-type RouteHomeProps = AppPageProps;
+type RouteLoginProps = AppPageProps;
 
-@readyState()
-@withAppContext<RouteHomeProps>()
-export class RouteHome extends AppPage<RouteHomeProps> {
+@withAppContext<RouteLoginProps>()
+export class RouteLogin extends AppPage<RouteLoginProps> {
     render() {
         return (
             <Page>
                 <DefaultLayout>
-                    Wellcome!
+                    Login!
                 </DefaultLayout>
             </Page>
         );

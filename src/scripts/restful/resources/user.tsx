@@ -39,7 +39,7 @@ export const userResources = {
     }),
     me: new Resource<User>({
         resourceType: userResourceType,
-        url: apiEntry('/user/me'),
+        url: apiEntry('/accountservice/api/account'),
         method: 'GET',
         mapDataToStore: (data, resourceType, store) => {
             store.dataMapping(resourceType, data);

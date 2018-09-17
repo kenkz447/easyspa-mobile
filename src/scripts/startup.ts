@@ -2,38 +2,37 @@ import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
 import { reducer as formReducer } from 'redux-form';
 
 import {
+    AppContextInStore,
     appContextRecuder,
     appContextServiceMiddleware,
     render,
     RootProps,
-    route
+    routeFrom
 } from '@/app';
 import { loginPath } from '@/configs';
-import { RouteHomeLoadable } from '@/routes';
+import { Auth } from '@/domain';
+import { RouteHomeLoadable, RouteLoginLoadable } from '@/routes';
 
 export function startup() {
     const appRoutes = [
-        RouteHomeLoadable
+        RouteHomeLoadable,
+        RouteLoginLoadable
     ];
 
     const middlewares = applyMiddleware(appContextServiceMiddleware);
-    const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+    const composeEnhancers = __REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
     const configuration: RootProps = {
         store: createStore(
             combineReducers({
                 form: formReducer,
-                values: appContextRecuder
+                [nameof<AppContextInStore>(o => o.appContext)]: appContextRecuder
             }),
             composeEnhancers(middlewares)
         ),
-        children: appRoutes.reduce(
-            (currenValue, Component) => {
-                return [...currenValue, route(Component)];
-            },
-            []
-        ),
-        loginPath: loginPath
+        children: routeFrom(appRoutes),
+        loginPath: loginPath,
+        Auth: Auth
     };
     return render(configuration);
 }

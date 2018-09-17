@@ -1,7 +1,8 @@
+import { AppCoreContext } from '@/app';
 import { User } from '@/restful';
 
 export const policies = {
-    isAdminGroup: (user?: User) => {
+    isAdminGroup: (context: AppCoreContext) => {
         return true;
     }
 };

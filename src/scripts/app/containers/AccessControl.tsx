@@ -1,3 +1,4 @@
+import { object } from 'prop-types';
 import { Store } from 'redux';
 
 import { AppCoreContext, getAppContext } from '@/app/core';
@@ -8,8 +9,13 @@ interface AccessControlProps {
 }
 
 export function AccessControl(props: AccessControlProps, context: { readonly store: Store }) {
-    const { policy, children } = this.props;
+    const { policy, children } = props;
     const appContext = getAppContext(context.store);
     const isAllowed = policy(appContext);
     return children(isAllowed);
 }
+
+// tslint:disable-next-line:no-string-literal
+AccessControl['contextTypes'] = {
+    store: object
+};

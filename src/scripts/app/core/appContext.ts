@@ -1,6 +1,8 @@
 import { connect } from 'react-redux';
 import { Action, Dispatch, Store } from 'redux';
 
+import { AppCoreContext } from '@/app/core/Types';
+
 const map = require('lodash/map');
 
 export interface AppContextServices {
@@ -8,13 +10,17 @@ export interface AppContextServices {
     readonly checkAppContext?: <T>(key: string) => Promise<T>;
 }
 
-interface AppContextRecuder extends Action {
+export interface AppContextInStore {
+    readonly appContext: Map<string, unknown>;
+}
+
+interface AppContextAction extends Action {
     readonly values: object;
 }
 
 const initAppContext = new Map();
 
-export function appContextRecuder(state: Map<string, unknown> = initAppContext, action: AppContextRecuder) {
+export function appContextRecuder(state: Map<string, unknown> = initAppContext, action: AppContextAction) {
     switch (action.type) {
         case 'SET_APP_CONTEXT':
             const newState = new Map(state);
@@ -71,27 +77,26 @@ export const setAppContextAction = <T = {}>(values: T, source) => {
 // tslint:disable-next-line:no-any
 export function withAppContext<T = {}>(...keys: Array<keyof T>): any {
     return (Component) => {
-        const mapStateToProps = ({ values }) => {
+        const mapStateToProps = ({ appContext }: AppContextInStore) => {
             if (!keys) {
                 return {};
             }
 
             const keysReducer = (reducerValue, currentKey) => {
-                reducerValue[currentKey] = values.get(currentKey);
+                reducerValue[currentKey] = appContext.get(currentKey);
                 return reducerValue;
             };
             const state = keys.reduce(keysReducer, {});
             return state;
         };
 
-        function mapDispatchToProps(dispatch: Dispatch) {
+        function mapDispatchToProps(dispatch: Dispatch): AppContextServices {
             return {
-                dispatch,
-                setStore: (values: {}) => {
+                setAppContext: (values: {}) => {
                     const action = setAppContextAction(values, Component);
                     return dispatch(action);
                 },
-                checkStore: (key: string) => {
+                checkAppContext: (key: string) => {
                     return new Promise((resolve) => {
                         const action = checkAppContextAction(key, resolve);
                         dispatch(action);
@@ -103,7 +108,18 @@ export function withAppContext<T = {}>(...keys: Array<keyof T>): any {
     };
 }
 
-export function getAppContext(store: Store) {
-    const appState = store.getState();
-    return appState.values;
+export function getAppContext<T extends AppCoreContext>(store: Store): AppCoreContext {
+    const appState: AppContextInStore = store.getState();
+    const contextEntries = appState.appContext.entries();
+    const contextList = Array.from(contextEntries);
+
+    const appContext = contextList.reduce(
+        (currentValue, next) => ({
+            ...currentValue,
+            [next[0]]: next[1]
+        }),
+        {}
+    );
+
+    return appContext as T;
 }

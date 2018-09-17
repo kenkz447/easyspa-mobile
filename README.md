@@ -1,8 +1,8 @@
-# furnituremaker-client
+# Easyspa Mobile
 
-First, you need restore git submodules via `restore-git-submodules.sh` script. Or `bash ./restore-git-submodules.sh` if Windows (with linux subsystem installed).
+First: `npm install` and then `npm start`.
 
-And `npm install` then `npm start`.
+Run `npm run build` to build production. Using `npm run analyzer` to analyzing dependencies.
 
 For vscode user, install there recommended extensions and press f5 to debug.
 

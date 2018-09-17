@@ -21,7 +21,7 @@ module.exports = {
     },
     plugins: [
         new webpack.DefinePlugin({
-            'API_ENTRY': JSON.stringify('http://v2-api.furnituremaker.vn'),
+            'API_ENTRY': JSON.stringify('https://spa-service-mono.easyspa.vn'),
         }),
         new ErrorOverlayPlugin(),
         new webpack.HotModuleReplacementPlugin(),

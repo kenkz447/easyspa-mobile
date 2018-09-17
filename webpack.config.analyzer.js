@@ -44,7 +44,7 @@ module.exports = {
             emitError: true
         }),
         new webpack.DefinePlugin({
-            'API_ENTRY': JSON.stringify('http://v2-api.furnituremaker.vn'),
+            'API_ENTRY': JSON.stringify('https://spa-service-mono.easyspa.vn'),
             'process.env': {
                 'NODE_ENV': JSON.stringify('production')
             }
