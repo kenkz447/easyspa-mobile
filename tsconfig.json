@@ -22,13 +22,14 @@
         "noImplicitAny": false,
         "removeComments": true,
         "sourceMap": true,
+        "strictNullChecks": true,
         "target": "es2016",
         "experimentalDecorators": true,
         "allowSyntheticDefaultImports": true,
         "skipLibCheck": true,
         "types": [
             "webpack-env"
-        ]
+        ],
     },
     "exclude": [
         "node_modules"

@@ -1,4 +1,3 @@
-import { History } from 'history';
 import * as Cookies from 'js-cookie';
 
 import { AppAuthenticator, AppAuthenticatorProps } from '@/app';
@@ -12,34 +11,39 @@ import { getUrlSearchParam } from '@/utilities';
 
 export type RoleType = 'Admin' | 'Sale';
 
-export class Auth implements AppAuthenticator {
+export class Authenticator implements AppAuthenticator {
     static readonly authInstance = Symbol();
 
     static get instance() {
-        return Auth[Auth.authInstance];
+        return Authenticator[Authenticator.authInstance];
     }
 
-    static set instance(instance: Auth) {
-        if (Auth[Auth.authInstance]) {
+    static set instance(instance: Authenticator) {
+        if (Authenticator[Authenticator.authInstance]) {
             return;
         }
-        Auth[Auth.authInstance] = instance;
+        Authenticator[Authenticator.authInstance] = instance;
     }
 
     readonly props: AppAuthenticatorProps;
 
     constructor(props: AppAuthenticatorProps) {
         this.props = props;
-        Auth.instance = this;
+        Authenticator.instance = this;
     }
 
     async isLoggedIn() {
         try {
+            const storedToken = this.getToken();
+            if (!storedToken) {
+                throw 'Token found!';
+            }
+
             const user: User = await restfulFetcher.fetchResource(userResources.me, []);
             return user;
+
         } catch (error) {
-            const { loginPath, history } = this.props;
-            throw () => history.replace(loginPath);
+            throw 'Redirect to login page...';
         }
     }
 
@@ -75,11 +79,12 @@ export class Auth implements AppAuthenticator {
         this.props.history.replace(loginPath);
     }
 
-    readonly getToken = (): string => {
+    readonly getToken = (): string | null => {
         const tokenFormCookies = Cookies.get('token');
         if (tokenFormCookies) {
-            return Cookies.get('token');
+            return Cookies.get('token') || null;
         }
+
         return window.sessionStorage.getItem('token');
     }
 

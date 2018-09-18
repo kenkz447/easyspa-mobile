@@ -10,7 +10,7 @@ import {
     routeFrom
 } from '@/app';
 import { loginPath } from '@/configs';
-import { Auth } from '@/domain';
+import { Authenticator } from '@/domain';
 import { RouteHomeLoadable, RouteLoginLoadable } from '@/routes';
 
 export function startup() {
@@ -32,7 +32,7 @@ export function startup() {
         ),
         children: routeFrom(appRoutes),
         loginPath: loginPath,
-        Auth: Auth
+        Authenticator: Authenticator
     };
     return render(configuration);
 }

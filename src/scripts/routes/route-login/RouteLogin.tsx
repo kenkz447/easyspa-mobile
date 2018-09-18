@@ -6,7 +6,7 @@ import { DefaultLayout } from '@/layout';
 
 type RouteLoginProps = AppPageProps;
 
-@withAppContext<RouteLoginProps>()
+@withAppContext()
 export class RouteLogin extends AppPage<RouteLoginProps> {
     render() {
         return (

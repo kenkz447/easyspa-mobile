@@ -19,30 +19,29 @@ export interface RootProps {
     readonly store: Store<string, AnyAction>;
     readonly children: JSX.Element[];
     readonly loginPath: string;
-    readonly Auth: new (props: AppAuthenticatorProps) => AppAuthenticator;
+    readonly Authenticator: new (props: AppAuthenticatorProps) => AppAuthenticator;
 }
 
 export class Root extends React.Component<RootProps> {
     readonly authHelper: AppAuthenticator;
     readonly history: History;
 
-    readonly state = {
-        allowLoad: false
-    };
-
     constructor(props: RootProps) {
         super(props);
-        const { Auth, loginPath, store } = props;
+        const { Authenticator, loginPath, store } = props;
+        
         this.history = createBrowserHistory();
-        this.authHelper = new Auth({
+
+        this.authHelper = new Authenticator({
             loginPath: loginPath,
             store: store,
             history: this.history,
         });
+        
         this.authHelper
             .isLoggedIn()
-            .catch((toLoginPage: Function) => {
-                throw toLoginPage();
+            .catch(() => {
+                throw this.history.replace(loginPath);
             })
             .then((user): AppCoreContext => {
                 return {

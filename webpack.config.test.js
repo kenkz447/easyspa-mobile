@@ -111,11 +111,7 @@ module.exports = {
         ]
     },
     resolve: {
-        modules: [
-            path.join(__dirname, 'src'),
-            path.join(__dirname, 'src', 'scripts'),
-            'node_modules'
-        ],
+        modules: ['node_modules'],
         extensions: ['.js', '.ts', '.tsx'],
         plugins: [new TsconfigPathsPlugin({ configFile: "./tsconfig.json" })]
     }

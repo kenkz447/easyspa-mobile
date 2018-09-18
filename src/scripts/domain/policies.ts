@@ -1,8 +1,7 @@
-import { AppCoreContext } from '@/app';
-import { User } from '@/restful';
+import { DomainContext } from './Types';
 
 export const policies = {
-    isAdminGroup: (context: AppCoreContext) => {
+    isAdminGroup: (context: DomainContext) => {
         return true;
     }
 };

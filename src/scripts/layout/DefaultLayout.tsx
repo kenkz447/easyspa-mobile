@@ -8,7 +8,7 @@ const Breadcrumb = styled.div`
 `;
 
 interface DefaultLayoutProps {
-    readonly breadcrumb: JSX.Element;
+    readonly breadcrumb: JSX.Element | null;
 }
 
 export class DefaultLayout extends React.Component<DefaultLayoutProps> {

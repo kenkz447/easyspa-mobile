@@ -7,7 +7,7 @@ import { DefaultLayout } from '@/layout';
 type RouteHomeProps = AppPageProps;
 
 @readyState()
-@withAppContext<RouteHomeProps>()
+@withAppContext()
 export class RouteHome extends AppPage<RouteHomeProps> {
     render() {
         return (

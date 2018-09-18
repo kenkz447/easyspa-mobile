@@ -10,7 +10,7 @@ import { apiEntry, restfulStore } from '@/restful/environments';
 
 export interface User extends RecordType {
     readonly id: string;
-    readonly name?: string;
+    readonly name: string;
     readonly email: string;
 }
 
