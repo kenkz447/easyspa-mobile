@@ -1,33 +1,32 @@
+import { InputItem } from 'antd-mobile';
+import { InputItemProps } from 'antd-mobile/lib/input-item';
 import * as React from 'react';
 import { WrappedFieldProps } from 'redux-form';
 
-import { AntdForm, AntdInput, AntdInputProps } from '../antd-component';
+import { BaseField } from '@/components/redux-fields/BaseField';
 
-interface RenderInputField extends WrappedFieldProps {
-    readonly inputProps: AntdInputProps;
-    readonly required: boolean;
-    readonly label: string;
+interface RenderInputField {
+    readonly inputProps: InputItemProps;
 }
 
-export function renderInput(props: RenderInputField) {
-    const { input, meta, inputProps, label, required } = props;
+export class RenderInput extends BaseField<RenderInputField> {
+    render() {
+        const { input, meta, inputProps } = this.props;
 
-    const validateStatus = meta.touched && meta.invalid ? 'error' : undefined;
+        const validateStatus = meta.touched && meta.invalid ? 'error' : undefined;
+        const isError = validateStatus === 'error';
 
-    return (
-        <AntdForm.Item
-            label={label}
-            validateStatus={validateStatus}
-            help={validateStatus && meta.error}
-            required={required}
-        >
-            <AntdInput
+        return (
+            <InputItem
                 value={input.value ? input.value : undefined}
                 onChange={input.onChange}
                 onFocus={input.onFocus}
                 onBlur={input.onBlur}
-                {...inputProps}
+                error={isError}
+                onErrorClick={this.onErrorClick}
+                // tslint:disable-next-line:no-any
+                {...inputProps as any}
             />
-        </AntdForm.Item>
-    );
+        );
+    }
 }

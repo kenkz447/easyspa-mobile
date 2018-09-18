@@ -1,7 +1,6 @@
 import { Fetcher } from 'react-restful';
 
-import { AntdMotification } from '@/components/antd-component';
-import { Authenticator } from '@/domain/Auth';
+import { Authenticator } from '@/domain/Authenticator';
 
 import { restfulStore } from './store';
 
@@ -20,10 +19,10 @@ export const restfulFetcher = new Fetcher({
             return;
         }
 
-        AntdMotification.error({
-            message: 'Opps!',
-            description: response.statusText
-        });
+        // AntdMotification.error({
+        //     message: 'Opps!',
+        //     description: response.statusText
+        // });
 
         if (process.env.NODE_ENV !== 'production') {
             const error = await response.text();

@@ -1,4 +1,5 @@
 import './Root.scss';
+import 'antd-mobile/dist/antd-mobile.css';
 
 import { createBrowserHistory, History } from 'history';
 import * as React from 'react';

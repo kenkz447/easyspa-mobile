@@ -4,8 +4,8 @@ import { Store } from 'redux';
 import { AppPageProps } from '@/app/containers';
 
 export interface AppCoreContext<U = {}> {
-    readonly currentUser: U;
-    readonly history: History;
+    readonly currentUser?: U;
+    readonly history?: History;
     readonly appState: 'LOADING' | 'READY';
 }
 

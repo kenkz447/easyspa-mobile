@@ -2,7 +2,10 @@ import * as React from 'react';
 
 import { AppPage, AppPageProps, readyState, withAppContext } from '@/app';
 import { Page } from '@/components';
+import { DomainContext } from '@/domain';
 import { DefaultLayout } from '@/layout';
+
+import { UserContainer } from './containers';
 
 type RouteHomeProps = AppPageProps;
 
@@ -13,7 +16,7 @@ export class RouteHome extends AppPage<RouteHomeProps> {
         return (
             <Page>
                 <DefaultLayout>
-                    Wellcome!
+                    <UserContainer />
                 </DefaultLayout>
             </Page>
         );

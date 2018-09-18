@@ -58,10 +58,7 @@ module.exports = {
             loader: 'less-loader',
             options: {
                 paths: [path.resolve(__dirname, "node_modules")],
-                javascriptEnabled: true,
-                modifyVars: {
-                    '@blue-6': '#D39C01'
-                }
+                javascriptEnabled: true
             }
         },
         {

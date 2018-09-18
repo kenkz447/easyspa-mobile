@@ -1,31 +1,35 @@
+import { Flex, Icon, NavBar } from 'antd-mobile';
 import * as React from 'react';
 import styled from 'styled-components';
 
-import { AntdLayout } from '@/components';
+const DefaultLayoutWrapper = styled.div`
+    height: 100vh;
+    background: #F7F7F7;
+`;
 
-const Breadcrumb = styled.div`
-    margin: 20px 0;
+const DefaultLayoutContent = styled.div`
+    height: 100vh;
+    margin: 0 auto;
+    background: #fff;
+    max-width: 414px;
+    width: 100%;
 `;
 
 interface DefaultLayoutProps {
-    readonly breadcrumb: JSX.Element | null;
 }
 
 export class DefaultLayout extends React.Component<DefaultLayoutProps> {
-    static readonly defaultProps: Partial<DefaultLayoutProps> = {
-        breadcrumb: null
-    };
-
     render() {
-        const { breadcrumb, children } = this.props;
+        const { children } = this.props;
 
         return (
-            <AntdLayout style={{ minHeight: 'inherit', background: '#F7F7F7 ' }}>
-                <Breadcrumb>
-                    {breadcrumb}
-                </Breadcrumb>
-                {children}
-            </AntdLayout>
+            <DefaultLayoutWrapper>
+                <DefaultLayoutContent>
+                    <Flex>
+                        {children}
+                    </Flex>
+                </DefaultLayoutContent>
+            </DefaultLayoutWrapper>
         );
     }
 }

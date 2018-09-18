@@ -6,64 +6,101 @@ import {
     restfulDataContainer
 } from 'react-restful';
 
+import { DomainContext } from '@/domain';
 import { apiEntry, restfulStore } from '@/restful/environments';
 
 export interface User extends RecordType {
-    readonly id: string;
+    readonly id: number;
+    readonly activated: boolean;
+    readonly imageUrl: string;
     readonly name: string;
     readonly email: string;
+    readonly login: string;
+    readonly spaBranchId: number;
+    readonly spaId: number;
+}
+
+export interface DeletedUserMeta {
+    readonly deletedUser: User;
 }
 
 export const userResourceType = new ResourceType<User>({
     store: restfulStore,
-    name: 'user',
+    name: nameof<User>(),
     schema: [{
         field: 'id',
         type: 'PK'
     }]
 });
 
-export interface UserAuthResponse {
-    readonly user: User;
-    readonly jwt: string;
-}
-
 export const userResources = {
-    auth: new Resource<UserAuthResponse>({
-        resourceType: userResourceType,
-        url: apiEntry('/auth/local'),
-        method: 'POST',
-        mapDataToStore: (data, resourceType, store) => {
-            store.dataMapping(resourceType, data.user);
-        }
-    }),
-    me: new Resource<User>({
+    account: new Resource<User>({
         resourceType: userResourceType,
         url: apiEntry('/accountservice/api/account'),
         method: 'GET',
         mapDataToStore: (data, resourceType, store) => {
             store.dataMapping(resourceType, data);
         }
+    }),
+    getAllUsersBySpaBranch: new Resource<User[]>({
+        resourceType: userResourceType,
+        url: apiEntry('/accountservice/api/users/spa-branch/:spaBranchId'),
+        method: 'GET',
+        mapDataToStore: (users, resourceType, store) => {
+            for (const user of users) {
+                store.dataMapping(resourceType, user);
+            }
+        }
+    }),
+    updateUser: new Resource<User>({
+        resourceType: userResourceType,
+        url: apiEntry('/accountservice/api/users'),
+        method: 'PUT',
+        mapDataToStore: (updatedUser, resourceType, store) => {
+            store.dataMapping(resourceType, updatedUser);
+        }
+    }),
+    deleteUser: new Resource<{}, DeletedUserMeta>({
+        resourceType: userResourceType,
+        url: apiEntry('/accountservice/api/users/:id'),
+        method: 'DELETE',
+        afterFetch: (params, fetchResult, meta, resourceType, store) => {
+            store.removeRecord(resourceType, meta!.deletedUser);
+        }
     })
 };
 
-export interface WithCurrentUserProps {
-    readonly user: User;
+export interface WithUsersProps {
+    readonly users: ReadonlyArray<User>;
 }
 
-export function withUsers<P extends WithCurrentUserProps>() {
-    const container = restfulDataContainer<User, WithCurrentUserProps, P>({
+export type WithUserOwnProps =
+    Required<Pick<DomainContext, 'currentUser'>> &
+    WithUsersProps;
+
+export const withUsers = <P extends WithUserOwnProps>() => {
+    const container = restfulDataContainer<User, WithUsersProps, P>({
         resourceType: userResourceType,
         store: restfulStore,
-        registerToTracking: (ownProps) => {
-            return [ownProps.user];
+        shouldTrackingNewRecord: (record, ownProps, trackedUsers) => {
+            return true;
+        },
+        registerToTracking: (ownProps, trackedUsers, event) => {
+
+            if (trackedUsers) {
+                return trackedUsers;
+            }
+
+            const { currentUser, users } = ownProps;
+            const trackingUsers = users.filter(o => o.id !== currentUser.id);
+            return trackingUsers;
         },
         mapToProps: (users) => {
             return {
-                user: users[0]
+                users: users
             };
         }
     });
 
     return classDecoratorFactory<P>(container);
-}
+};
