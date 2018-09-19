@@ -5,23 +5,15 @@ import { AppPage, AppPageProps, readyState, withAppContext } from '@/app';
 import { Page } from '@/components';
 import { DomainContext } from '@/domain';
 import { DefaultLayout } from '@/layout';
-import { formatDate } from '@/utilities';
 
-import {
-    HomeBookingContainer,
-    HomeChartContainer,
-    HomeCustomerContainer,
-    HomeInvoiceContainer,
-    HomeRevenuesContainer
-} from './containers';
-import { routeHomeInfo } from './RouteHomeInfo';
+import { routeBookingsInfo } from './RouteBookingsInfo';
 
-type RouteHomeProps = AppPageProps;
+type RouteBookingsProps = AppPageProps;
 
 @readyState()
 @withAppContext()
-export class RouteHome extends AppPage<RouteHomeProps> {
-    constructor(props: RouteHomeProps) {
+export class RouteBookings extends AppPage<RouteBookingsProps> {
+    constructor(props: RouteBookingsProps) {
         super(props);
         const { setAppContext } = this.props;
 
@@ -48,11 +40,7 @@ export class RouteHome extends AppPage<RouteHomeProps> {
             <Page>
                 <DefaultLayout>
                     <WingBlank>
-                        <HomeChartContainer />
-                        <HomeRevenuesContainer />
-                        <HomeInvoiceContainer />
-                        <HomeBookingContainer />
-                        <HomeCustomerContainer />
+                        {null}
                     </WingBlank>
                 </DefaultLayout>
             </Page >
@@ -62,8 +50,7 @@ export class RouteHome extends AppPage<RouteHomeProps> {
     private readonly getNavbarTitle = () => {
         return (
             <div style={{ textAlign: 'center', lineHeight: 1 }}>
-                {routeHomeInfo.title}<br />
-                <small>Hôm nay - {formatDate(new Date, 'DD/MM/YYYY')}</small>
+                {routeBookingsInfo.title}<br />
             </div>
         );
     }

@@ -3,6 +3,8 @@ import * as Loadable from 'react-loadable';
 
 import { Loading } from '@/components';
 
+import { routeHomeInfo } from './RouteHomeInfo';
+
 export const RouteHomeLoadable = Loadable({
     loader: () => import('./RouteHome').then(o => o.RouteHome),
     loading: () => <Loading />
@@ -10,7 +12,7 @@ export const RouteHomeLoadable = Loadable({
 
 RouteHomeLoadable.defaultProps = {
     routeProps: {
-        path: '/',
+        path: routeHomeInfo.path,
         exact: true
-     }
+    }
 };

@@ -25,3 +25,10 @@ export type AppAuthenticator = {
     readonly login: (identifier: string, password: string, rememberMe: boolean) => Promise<boolean>;
     readonly logout: () => void;
 }; 
+
+export interface RouteInfo {
+    readonly path: string;
+    readonly title: string;
+    readonly icon: JSX.Element;
+    readonly isActive: () => boolean;
+}

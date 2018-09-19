@@ -28,6 +28,8 @@ export function formatCurrency(value: number | FormatCurrencyValue) {
 
     if (typeof value === 'number') {
         amount = value;
+    } else if (!value) {
+        amount = 0;
     } else {
         amount = value.amount;
         sourceCurrency = value.sourceCurrency || null;
