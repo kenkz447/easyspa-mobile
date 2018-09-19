@@ -3,6 +3,8 @@ import * as Loadable from 'react-loadable';
 
 import { Loading } from '@/components';
 
+import { routeCustomerDetailInfo } from './RouteCustomerDetailInfo';
+
 export const RouteCustomerDetailLoadable = Loadable({
     loader: () => import('./RouteCustomerDetail').then(o => o.RouteCustomerDetail),
     loading: () => <Loading />
@@ -10,7 +12,7 @@ export const RouteCustomerDetailLoadable = Loadable({
 
 RouteCustomerDetailLoadable.defaultProps = {
     routeProps: {
-        path: `/customer/:customerId`,
+        path: routeCustomerDetailInfo.path,
         exact: true
      }
 };

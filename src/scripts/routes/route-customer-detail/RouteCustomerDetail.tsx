@@ -5,10 +5,7 @@ import { Page } from '@/components';
 import { DefaultLayout } from '@/layout';
 
 import { CustomerDetailContainer } from './containers/CustomerDetailContainer';
-
-interface CustomerPathParams {
-    readonly customerId: string;
-}
+import { CustomerPathParams } from './RouteCustomerDetailInfo';
 
 type RouteCustomerProps = AppPageProps<CustomerPathParams>;
 
@@ -22,7 +19,7 @@ export class RouteCustomerDetail extends AppPage<RouteCustomerProps> {
         return (
             <Page>
                 <DefaultLayout>
-                    <CustomerDetailContainer customerId={customerId}/>
+                    <CustomerDetailContainer customerId={customerId as string}/>
                 </DefaultLayout>
             </Page>
         );

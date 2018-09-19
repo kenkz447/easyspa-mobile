@@ -33,14 +33,16 @@ export class CustomerList extends React.PureComponent<CustomerListProps, Custome
                 <List>
                     {
                         customers.map(customer => {
-                            const toCustomerDetailPath = String(`customer/${customer.id}`);
+                            const toCustomerDetailPath = String(`/customer/${customer.id}`);
                             return (
                                 <List.Item
                                     key={customer.id}
                                     onClick={() => history!.push(toCustomerDetailPath)}
                                 >
                                     <strong>{customer.name}</strong>
-                                    <List.Item.Brief>{customer.mobile || 'Chưa có SĐT'}</List.Item.Brief>
+                                    <List.Item.Brief>
+                                        {customer.mobile || 'Chưa có SĐT'}
+                                    </List.Item.Brief>
                                 </List.Item>
                             );
                         })

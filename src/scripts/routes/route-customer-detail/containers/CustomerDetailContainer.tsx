@@ -21,7 +21,7 @@ export class CustomerDetailContainer extends React.PureComponent<CustomerDetailO
                 parameters={[{
                     type: 'path',
                     parameter: 'customerId',
-                    value: +this.props.customerId!
+                    value: this.props.customerId
                 }]}
                 render={(renderProps) => {
                     const { data } = renderProps;
