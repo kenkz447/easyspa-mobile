@@ -29,8 +29,8 @@ const DefaultLayoutWrapper = styled.div`
                     padding: 0;
                     &-body {
                         background-color: inherit;
-                        border-top: none;
-                        border-bottom: none;
+                        border-top: 0!important;
+                        border-bottom: 0!important;
                     }
                     &-thumb {
                         font-size: 1.5em;
@@ -40,7 +40,7 @@ const DefaultLayoutWrapper = styled.div`
                         color: inherit;
                     }
                     &-line {
-                        border-bottom: none;
+                        border-bottom: 0!important;
                     }
                     &-item {
                         background-color: inherit;

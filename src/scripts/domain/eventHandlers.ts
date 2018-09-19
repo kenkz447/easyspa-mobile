@@ -1,4 +1,5 @@
 import { AppCoreContext, AppEventHandlers } from '@/app';
+import { DomainContext } from '@/domain/Types';
 import {
     restfulFetcher,
     Spa,
@@ -23,8 +24,15 @@ export const eventHandlers: AppEventHandlers = {
     onPageLoad: (props) => {
         const { setAppContext } = props;
 
-        setAppContext({
-            // Clear app's context here 
+        setAppContext<DomainContext>({
         });
+        setTimeout(
+            () => {
+                setAppContext<DomainContext>({
+                    drawerVisibled: false
+                });
+            },
+            100
+        );
     }
 };
