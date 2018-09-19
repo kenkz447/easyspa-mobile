@@ -8,5 +8,8 @@ declare module '*.scss' {
     export default content;
 }
 
-declare const __REDUX_DEVTOOLS_EXTENSION_COMPOSE__: any;
 declare const API_ENTRY: string;
+
+declare const Window = {
+    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__: any
+}

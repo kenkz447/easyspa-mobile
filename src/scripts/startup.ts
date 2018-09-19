@@ -20,7 +20,7 @@ export function startup() {
     ];
 
     const middlewares = applyMiddleware(appContextServiceMiddleware);
-    const composeEnhancers = __REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+    const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
     const configuration: RootProps = {
         store: createStore(
