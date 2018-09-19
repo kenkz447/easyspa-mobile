@@ -12,6 +12,8 @@ import {
 import { loginPath } from '@/configs';
 import { Authenticator } from '@/domain';
 import {
+    RouteCustomerDetailLoadable,
+    RouteCustomerLoadable,
     RouteBookingsLoadable,
     RouteHomeLoadable,
     RouteLoginLoadable
@@ -19,6 +21,9 @@ import {
 
 export function startup() {
     const appRoutes = [
+        RouteCustomerLoadable,
+        RouteLoginLoadable,
+        RouteCustomerDetailLoadable
         RouteHomeLoadable,
         RouteLoginLoadable,
         RouteBookingsLoadable
