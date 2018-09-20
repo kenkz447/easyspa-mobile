@@ -12,9 +12,9 @@ import {
 import { loginPath } from '@/configs';
 import { Authenticator } from '@/domain';
 import {
+    RouteBookingsLoadable,
     RouteCustomerDetailLoadable,
     RouteCustomerLoadable,
-    RouteBookingsLoadable,
     RouteHomeLoadable,
     RouteLoginLoadable
 } from '@/routes';
@@ -23,7 +23,7 @@ export function startup() {
     const appRoutes = [
         RouteCustomerLoadable,
         RouteLoginLoadable,
-        RouteCustomerDetailLoadable
+        RouteCustomerDetailLoadable,
         RouteHomeLoadable,
         RouteLoginLoadable,
         RouteBookingsLoadable

@@ -10,6 +10,6 @@ declare module '*.scss' {
 
 declare const API_ENTRY: string;
 
-declare const Window = {
+declare interface Window {
     __REDUX_DEVTOOLS_EXTENSION_COMPOSE__: any
 }
