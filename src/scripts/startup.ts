@@ -25,7 +25,6 @@ export function startup() {
         RouteLoginLoadable,
         RouteCustomerDetailLoadable,
         RouteHomeLoadable,
-        RouteLoginLoadable,
         RouteBookingsLoadable
     ];
 

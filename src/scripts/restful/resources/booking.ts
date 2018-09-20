@@ -58,5 +58,10 @@ export const bookingResources = {
                 store.dataMapping(resourceTYpe, booking);
             }
         }
+    }),
+    getBookingByCustomerAndRangeTime: new Resource<Booking[]>({
+        resourceType: bookingResourceType,
+        url: apiEntry('/customerservice/api/customer-spa-branches/bookings'),
+        method: 'POST'
     })
 };

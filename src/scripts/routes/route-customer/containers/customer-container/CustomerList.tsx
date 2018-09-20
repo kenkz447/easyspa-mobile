@@ -12,7 +12,7 @@ export interface CustomerListProps extends
 
 }
 
-const WrappedList = styled.div`
+export const WrappedList = styled.div`
     width: 100%;
 `;
 
