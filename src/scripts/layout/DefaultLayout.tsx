@@ -1,4 +1,4 @@
-import { Flex } from 'antd-mobile';
+import { Flex, WingBlank } from 'antd-mobile';
 import * as React from 'react';
 import styled from 'styled-components';
 
@@ -84,7 +84,9 @@ export class DefaultLayout extends React.Component<DefaultLayoutProps> {
                         <div>
                             <DefaultLayoutNavbar />
                             <LayoutDrawerContent>
-                                {children}
+                                <WingBlank>
+                                    {children}
+                                </WingBlank>
                             </LayoutDrawerContent>
                         </div>
                     </DefaultLayoutDrawer>

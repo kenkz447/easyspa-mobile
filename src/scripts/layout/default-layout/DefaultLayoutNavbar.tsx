@@ -53,6 +53,7 @@ export class DefaultLayoutNavbar extends React.PureComponent<DefaultLayoutNavbar
             >
                 <NavbarWrapper floated={this.state.navbarFloated}>
                     <NavBar
+                        mode="light"
                         leftContent={this.getHamburgerButton()}
                         /* tslint:disable-next-line:no-any */
                         {...navbar as any}
