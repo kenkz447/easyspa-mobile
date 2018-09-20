@@ -27,18 +27,7 @@ export class RouteHome extends AppPage<RouteHomeProps> {
 
         setAppContext<DomainContext>({
             navbar: {
-                mode: 'light',
-                children: this.getNavbarTitle(),
-                leftContent: (
-                    <div
-                        onClick={() => {
-                            setAppContext<DomainContext>({ drawerVisibled: true });
-                        }}
-                    >
-                        <img src="/static/assets/hamburger.png" />
-                    </div>
-
-                )
+                children: this.getNavbarTitle()
             }
         });
     }

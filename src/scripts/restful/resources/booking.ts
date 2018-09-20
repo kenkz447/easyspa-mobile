@@ -1,8 +1,11 @@
-import { AnotherTransaction } from '@/restful/resources/another-transaction';
-import { Customer } from '@/restful/resources/customer';
-import { PaymentMethodItem } from '@/restful/resources/spa-branch-transaction';
+import { Resource, ResourceType } from 'react-restful';
 
+import { apiEntry } from '@/restful/environments';
+
+import { AnotherTransaction } from './another-transaction';
 import { Appointment } from './appointment';
+import { Customer } from './customer';
+import { TransactionDTO } from './spa-branch-transaction';
 
 export type AppointmentStatus = 'TEMP' | 'CONFIRMED' | 'CHECKIN' | 'CHECKOUT' | 'PAYED' | 'CANCEL';
 export interface Booking {
@@ -37,8 +40,23 @@ export interface Booking {
     readonly note?: string;
 }
 
-export interface TransactionDTO {
-    readonly invoiceCode?: string;
-    readonly note?: string;
-    readonly paymentMethodDTOS?: PaymentMethodItem[];
-}
+export const bookingResourceType = new ResourceType({
+    name: nameof<Booking>(),
+    schema: [{
+        field: 'id',
+        type: 'PK'
+    }]
+});
+
+export const bookingResources = {
+    getBySpaBranch: new Resource<Booking[]>({
+        resourceType: bookingResourceType,
+        url: apiEntry('/bookingservice/api/bookings/spa-branch/:spaBranchId'),
+        method: 'POST',
+        mapDataToStore: (bookings, resourceTYpe, store) => {
+            for (const booking of bookings) {
+                store.dataMapping(resourceTYpe, booking);
+            }
+        }
+    })
+};

@@ -5,6 +5,7 @@ import { AppPage, AppPageProps, readyState, withAppContext } from '@/app';
 import { Page } from '@/components';
 import { DomainContext } from '@/domain';
 import { DefaultLayout } from '@/layout';
+import { BookingsContainer } from '@/routes/route-bookings/containers';
 
 import { routeBookingsInfo } from './RouteBookingsInfo';
 
@@ -19,18 +20,7 @@ export class RouteBookings extends AppPage<RouteBookingsProps> {
 
         setAppContext<DomainContext>({
             navbar: {
-                mode: 'light',
-                children: this.getNavbarTitle(),
-                leftContent: (
-                    <div
-                        onClick={() => {
-                            setAppContext<DomainContext>({ drawerVisibled: true });
-                        }}
-                    >
-                        <img src="/static/assets/hamburger.png" />
-                    </div>
-
-                )
+                children: routeBookingsInfo.title
             }
         });
     }
@@ -40,18 +30,10 @@ export class RouteBookings extends AppPage<RouteBookingsProps> {
             <Page>
                 <DefaultLayout>
                     <WingBlank>
-                        {null}
+                        <BookingsContainer/>
                     </WingBlank>
                 </DefaultLayout>
             </Page >
-        );
-    }
-
-    private readonly getNavbarTitle = () => {
-        return (
-            <div style={{ textAlign: 'center', lineHeight: 1 }}>
-                {routeBookingsInfo.title}<br />
-            </div>
         );
     }
 }

@@ -2,12 +2,12 @@ import { NavBar } from 'antd-mobile';
 import * as React from 'react';
 import styled from 'styled-components';
 
-import { withAppContext } from '@/app';
+import { AppContextServices, withAppContext } from '@/app';
 import { AntdAffix } from '@/components';
 import { DomainContext } from '@/domain';
 
 interface NavbarWrapperProps {
-    readonly floated: boolean; 
+    readonly floated: boolean;
 }
 
 const NavbarWrapper: React.ComponentType<NavbarWrapperProps> = styled.div`
@@ -17,22 +17,29 @@ const NavbarWrapper: React.ComponentType<NavbarWrapperProps> = styled.div`
         }
         return '';
     }};
-`; 
+`;
 
-type DefaultLayoutNavbarProps = Pick<DomainContext, 'navbar'>;
+export const NavbarTitle = styled.div`
+    text-align: center;
+    line-height: 1;
+`;
+
+type DefaultLayoutNavbarProps =
+    Pick<AppContextServices, 'setAppContext'> &
+    Pick<DomainContext, 'navbar'>;
 
 interface DefaultLayoutNavbarState {
     readonly navbarFloated: boolean;
 }
 
-@withAppContext<DefaultLayoutNavbarProps>('navbar')
+@withAppContext<DefaultLayoutNavbarProps>('setAppContext', 'navbar')
 export class DefaultLayoutNavbar extends React.PureComponent<DefaultLayoutNavbarProps, DefaultLayoutNavbarState> {
     readonly state = {
         navbarFloated: false
     };
 
     public render() {
-        const { navbar } = this.props;
+        const { navbar, setAppContext } = this.props;
 
         if (!navbar) {
             return null;
@@ -45,10 +52,31 @@ export class DefaultLayoutNavbar extends React.PureComponent<DefaultLayoutNavbar
                 })}
             >
                 <NavbarWrapper floated={this.state.navbarFloated}>
-                    {/* tslint:disable-next-line:no-any */}
-                    <NavBar {...navbar as any} />
+                    <NavBar
+                        leftContent={this.getHamburgerButton()}
+                        /* tslint:disable-next-line:no-any */
+                        {...navbar as any}
+                    >
+                        {typeof navbar.children === 'string' ?
+                            <NavbarTitle>{navbar.children}</NavbarTitle> :
+                            navbar.children
+                        }
+                    </NavBar>
                 </NavbarWrapper>
             </AntdAffix>
+        );
+    }
+
+    readonly getHamburgerButton = () => {
+        const { setAppContext } = this.props;
+        return (
+            <div
+                onClick={() => {
+                    setAppContext!<DomainContext>({ drawerVisibled: true });
+                }}
+            >
+                <img src="/static/assets/hamburger.png" />
+            </div>
         );
     }
 }
