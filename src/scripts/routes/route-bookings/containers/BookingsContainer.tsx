@@ -22,7 +22,7 @@ type BookingsContainerProps =
     Pick<DomainContext, 'history'>;
 
 interface BookingsContainerState {
-    readonly currentSearchAppointmentStatus?: Booking['appointmentStatus'];
+    readonly currentSearchAppointmentStatus: Booking['appointmentStatus'];
 }
 
 @withAppContext<DomainContext>('history', 'currentSpaBranch')
@@ -96,10 +96,12 @@ export class BookingsContainer extends React.PureComponent<BookingsContainerProp
         return {
             from: fromMoment.toISOString(),
             to: toMoment.toISOString(),
-            status: this.state.currentSearchAppointmentStatus
+            statuses: [this.state.currentSearchAppointmentStatus]
         };
-    }
+    } 
 
-    private readonly getCurrentStatusSearch = () =>
-        getUrlSearchParam(nameof<Booking>(o => o.appointmentStatus)) as AppointmentStatus
+    private readonly getCurrentStatusSearch = () => {
+        const result = getUrlSearchParam(nameof<Booking>(o => o.appointmentStatus)) as AppointmentStatus;
+        return result || 'CONFIRMED';
+    }
 }

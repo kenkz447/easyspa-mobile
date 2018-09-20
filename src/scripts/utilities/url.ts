@@ -1,5 +1,5 @@
-export const getUrlSearchParam = (key: string, query?: string) => {
-    const currentUrlParams = query ? new URLSearchParams(query) : new URLSearchParams();
+export const getUrlSearchParam = (key: string) => {
+    const currentUrlParams = new URLSearchParams(location.search);
     return currentUrlParams.get(key);
 };
 

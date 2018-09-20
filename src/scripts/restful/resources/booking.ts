@@ -56,7 +56,7 @@ export const bookingResourceType = new ResourceType({
 export interface GetBookingBySpaBranchPayload {
     readonly from: string;
     readonly to: string;
-    readonly status?: AppointmentStatus;
+    readonly statuses?: AppointmentStatus[];
 }
 
 export const bookingResources = {

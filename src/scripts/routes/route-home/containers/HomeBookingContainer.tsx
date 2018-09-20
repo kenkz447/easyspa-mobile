@@ -6,11 +6,7 @@ import { withAppContext } from '@/app';
 import { PrimaryText } from '@/components';
 import { DomainContext } from '@/domain';
 import { restfulFetcher, restfulStore } from '@/restful';
-import {
-    ReportBookingCountPayload,
-    reportCountResources,
-    ReportTransactionCountPayload
-} from '@/restful/resources/count-resource';
+import { ReportBookingCountPayload, reportCountResources } from '@/restful';
 import { getEndOf, getStartOf } from '@/utilities';
 
 const HomeBookingContainerWrapper = styled.div`

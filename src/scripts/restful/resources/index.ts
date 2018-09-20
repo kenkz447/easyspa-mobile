@@ -1,6 +1,7 @@
 export * from './account-authenticate';
 export * from './appointment';
 export * from './booking';
+export * from './count-resource';
 export * from './customer';
 export * from './report-customer-count';
 export * from './report-revenue';
