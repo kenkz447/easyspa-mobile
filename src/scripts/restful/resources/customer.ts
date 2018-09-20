@@ -66,9 +66,7 @@ export interface WithCustomersProps {
     readonly customers: ReadonlyArray<Customer>;
 }
 
-export type WithCustomerOwnProps =
-    Required<Pick<DomainContext, 'customers'>> &
-    WithCustomersProps;
+export type WithCustomerOwnProps =  WithCustomersProps;
 
 export const withCustomers = <P extends WithCustomerOwnProps>() => {
     const container = restfulDataContainer<Customer, WithCustomersProps, P>({
