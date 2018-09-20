@@ -26,13 +26,13 @@ export class CustomerBookingItem extends React.PureComponent<CustomerBookingItem
                     <ListTitle>
                         <Flex className="text-center">
                             <Flex.Item>
-                                Thời gian
+                                <small>Thời gian</small>
                             </Flex.Item>
                             <Flex.Item>
-                                Trạng thái
+                                <small>Trạng thái</small>
                             </Flex.Item>
                             <Flex.Item>
-                                Số tiền
+                                <small>Số tiền</small>
                             </Flex.Item>
                         </Flex>
                     </ListTitle>

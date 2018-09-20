@@ -1,12 +1,10 @@
-import { Flex } from 'antd-mobile';
 import * as React from 'react';
 import { RestfulRender } from 'react-restful';
 
 import { restfulFetcher, restfulStore } from '@/restful';
-import { Booking, bookingResources } from '@/restful/resources/booking';
-import {
-    CustomerBookingItem
-} from '@/routes/route-customer-detail/containers/customer-detail-container/customer-booking-container';
+import { bookingResources } from '@/restful/resources/booking';
+
+import { CustomerBookingItem } from './customer-booking-container';
 
 interface CustomerBookingContainerOwnProps {
     readonly customerId: number;

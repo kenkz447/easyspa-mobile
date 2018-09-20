@@ -4,11 +4,15 @@ import styled from 'styled-components';
 
 import { Customer } from '@/restful';
 
-import { CustomerBookingContainer } from './CustomerBookingContainer';
+import {
+    CustomerBookingContainer
+} from './customer-detail/CustomerBookingContainer';
+import {
+    CustomerOverviewContainer
+} from './customer-detail/CustomerOverviewContainer';
 import {
     CustomerServicePackageContainer
-} from './CustomerServicePackageContainer';
-import { CustomerStatisticContainer } from './CustomerStatisticContainer';
+} from './customer-detail/CustomerServicePackageContainer';
 
 const CustomerInfo = styled.div`
     color: #BDBDBD;
@@ -20,9 +24,9 @@ export class CustomerDetail extends React.PureComponent<CustomerDetailOwnProps> 
     render() {
         const { customer } = this.props;
         const tabs = [
-            { title: 'Thống kê'},
+            { title: 'Thống kê' },
             { title: 'Lịch hẹn' },
-            { title: 'Liệu trình'},
+            { title: 'Liệu trình' },
             { title: 'Lịch sử giao dịch' }
         ];
         return (
@@ -35,7 +39,7 @@ export class CustomerDetail extends React.PureComponent<CustomerDetailOwnProps> 
                     </Card.Body>
                 </Card>
                 <Tabs tabs={tabs}>
-                    <CustomerStatisticContainer />
+                    <CustomerOverviewContainer customerId={customer.id} />
                     <CustomerBookingContainer customerId={customer.id} />
                     <CustomerServicePackageContainer customerId={customer.id} />
                     <div>Lịch sử giao dịch</div>
