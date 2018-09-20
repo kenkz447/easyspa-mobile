@@ -51,10 +51,10 @@ export class BookingsContainer extends React.PureComponent<BookingsContainerProp
     public render() {
         return (
             <React.Fragment>
-                <BookingListHeader />
+                <BookingListHeader currentSearchStatus={this.state.currentSearchAppointmentStatus} />
                 <WhiteSpace size="lg" />
                 <RestfulRender
-                    store={restfulStore}
+                    store={restfulStore} 
                     fetcher={restfulFetcher}
                     resource={bookingResources.getBySpaBranch}
                     parameters={this.getResourceParams()}
