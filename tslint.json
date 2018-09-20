@@ -125,9 +125,7 @@
         "no-default-export": true,
         // tslint-immutable
         "readonly-keyword": [true, {"ignore-prefix": "_"}],
-        "no-array-mutation": true,
         "no-method-signature": true
-        
     },
     "exclude":[
         "**/dist/**"
