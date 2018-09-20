@@ -7,6 +7,8 @@ import { Customer } from '@/restful/resources/customer';
 export interface DomainContext extends AppCoreContext<User> {
     readonly currentSpa?: Spa;
     readonly currentSpaBranch?: SpaBranch;
-    readonly navbar?: NavBarProps;
+    readonly navbar?: NavBarProps & {
+        readonly action?: 'open-sider' | 'back'
+    };
     readonly drawerVisibled?: boolean;
 }

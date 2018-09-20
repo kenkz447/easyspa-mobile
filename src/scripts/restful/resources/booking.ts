@@ -2,6 +2,7 @@ import { Resource, ResourceType } from 'react-restful';
 
 import { apiEntry, restfulStore } from '@/restful/environments';
 import { Service } from '@/restful/resources/service';
+import { dateSortDesc } from '@/utilities';
 
 import { AnotherTransaction } from './another-transaction';
 import { Appointment, AppointmentStatus } from './appointment';
@@ -100,5 +101,22 @@ export const bookingUtils = {
         });
 
         return result;
+    },
+    getCompletedTime: (booking: Booking) => {
+        const appointmentContentTime: Date[] = [];
+        for (const appointment of booking.appointments) {
+            const lastAppointmentContentIndex = appointment.appointmentContents.length - 1;
+            const lastAppointmentContent = appointment.appointmentContents[lastAppointmentContentIndex];
+
+            const appointmentContextTime = new Date(lastAppointmentContent.appointmentDate);
+            appointmentContextTime.setMinutes(
+                appointmentContextTime.getMinutes() + lastAppointmentContent.service.timeValue
+            );
+            appointmentContentTime.push(appointmentContextTime);
+        }
+
+        const sortedDates = appointmentContentTime.sort(dateSortDesc);
+
+        return sortedDates[0];
     }
 };

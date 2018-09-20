@@ -29,6 +29,6 @@ export type AppAuthenticator = {
 export interface RouteInfo {
     readonly path: string;
     readonly title: string;
-    readonly icon: JSX.Element;
+    readonly icon?: JSX.Element;
     readonly isActive: () => boolean;
 }

@@ -1,12 +1,11 @@
 import { Card, WhiteSpace } from 'antd-mobile';
 import * as React from 'react';
 
-import {
-    BookingPreviewService
-} from '@/components/domain-components/booking/BookingPreviewService';
 import { Booking, bookingUtils } from '@/restful';
 import { formatDate } from '@/utilities';
 
+import { BookingCustomerName } from './BookingCustomerName';
+import { BookingPreviewService } from './BookingPreviewService';
 import { BookingPrice } from './BookingPrice';
 import { BookingStatusTag } from './BookingStatusTag';
 
@@ -42,7 +41,7 @@ export function BookingPreviewCard(props: BookingPreviewCardProps) {
 
             </Card.Body>
             <Card.Footer
-                content={booking.name}
+                content={<BookingCustomerName>{booking.name}</BookingCustomerName>}
                 extra={<BookingPrice price={booking.totalAmount} />}
             />
         </Card>

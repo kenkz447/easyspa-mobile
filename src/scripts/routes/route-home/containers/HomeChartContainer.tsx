@@ -56,7 +56,7 @@ export class HomeChartContainer extends React.PureComponent<{}, HomeRevenuesCont
         return (
             <Chart
                 height={250}
-                padding={[30, 0, 30, 70]}
+                padding={[30, 0, 50, 70]}
                 data={revenues}
                 forceFit={true}
             >

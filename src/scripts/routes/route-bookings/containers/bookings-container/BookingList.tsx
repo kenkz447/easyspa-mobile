@@ -3,13 +3,7 @@ import * as React from 'react';
 import { RestfulRender } from 'react-restful';
 
 import { withAppContext } from '@/app';
-import { Loading } from '@/components';
-import {
-    BookingPreviewCard
-} from '@/components/domain-components/booking/BookingPreviewCard';
-import {
-    BookingPrice
-} from '@/components/domain-components/booking/BookingPrice';
+import { BookingPreviewCard, Loading } from '@/components';
 import { DomainContext } from '@/domain';
 import {
     Booking,
@@ -17,6 +11,7 @@ import {
     restfulFetcher,
     restfulStore
 } from '@/restful';
+import { getBookingDetailUrl } from '@/routes/route-booking-detail';
 
 export interface BookingListProps
     extends Pick<DomainContext, 'history'> {
@@ -47,7 +42,11 @@ export class BookingList extends React.PureComponent<BookingListProps> {
                                 if (!data || fetching) {
                                     return <Loading />;
                                 }
-                                const toBookingDetailPath = `/booking/${booking.id}`;
+
+                                const toBookingDetailPath = getBookingDetailUrl({
+                                    bookingId: booking.id
+                                });
+
                                 return (
                                     <React.Fragment>
                                         <BookingPreviewCard

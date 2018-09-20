@@ -26,20 +26,21 @@ export const NavbarTitle = styled.div`
 
 type DefaultLayoutNavbarProps =
     Pick<AppContextServices, 'setAppContext'> &
+    Pick<DomainContext, 'history'> &
     Pick<DomainContext, 'navbar'>;
 
 interface DefaultLayoutNavbarState {
     readonly navbarFloated: boolean;
 }
 
-@withAppContext<DefaultLayoutNavbarProps>('setAppContext', 'navbar')
+@withAppContext<DefaultLayoutNavbarProps>('history', 'setAppContext', 'navbar')
 export class DefaultLayoutNavbar extends React.PureComponent<DefaultLayoutNavbarProps, DefaultLayoutNavbarState> {
     readonly state = {
         navbarFloated: false
     };
 
     public render() {
-        const { navbar, setAppContext } = this.props;
+        const { navbar } = this.props;
 
         if (!navbar) {
             return null;
@@ -54,7 +55,11 @@ export class DefaultLayoutNavbar extends React.PureComponent<DefaultLayoutNavbar
                 <NavbarWrapper floated={this.state.navbarFloated}>
                     <NavBar
                         mode="light"
-                        leftContent={this.getHamburgerButton()}
+                        leftContent={
+                            navbar.action === 'back' ?
+                                this.getBackButton() :
+                                this.getHamburgerButton()
+                        }
                         /* tslint:disable-next-line:no-any */
                         {...navbar as any}
                     >
@@ -77,6 +82,19 @@ export class DefaultLayoutNavbar extends React.PureComponent<DefaultLayoutNavbar
                 }}
             >
                 <img src="/static/assets/hamburger.png" />
+            </div>
+        );
+    }
+
+    readonly getBackButton = () => {
+        const { history } = this.props;
+        return (
+            <div
+                onClick={() => {
+                    history!.goBack();
+                }}
+            >
+                <img src="/static/assets/back.png" />
             </div>
         );
     }

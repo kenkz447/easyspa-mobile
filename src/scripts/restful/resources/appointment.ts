@@ -88,11 +88,11 @@ export interface ServiceDiscount {
 export const appointmentUtils = {
     getStatusInfo: (status: AppointmentStatus) => {
         const statusInfo = allApointmentStatus.find(o => o.value === status);
-        let statusColor: string = 'darkorange';
+        let statusColor: string = '#FF9500';
         if (status === 'CHECKIN') {
-            statusColor = 'blue';
+            statusColor = '#5AC8FA';
         } else if (status === 'CHECKOUT') {
-            statusColor = 'green';
+            statusColor = '#4CD964';
         }
 
         return {
