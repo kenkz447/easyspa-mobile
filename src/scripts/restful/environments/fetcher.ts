@@ -1,5 +1,7 @@
+// tslint:disable:no-console
 import { Fetcher } from 'react-restful';
 
+import { AntdNotification } from '@/components/antd-component';
 import { Authenticator } from '@/domain/Authenticator';
 
 import { restfulStore } from './store';
@@ -19,15 +21,14 @@ export const restfulFetcher = new Fetcher({
             return;
         }
 
-        // AntdMotification.error({
-        //     message: 'Opps!',
-        //     description: response.statusText
-        // });
+        const error = await response.text();
+        console.error(error);
 
         if (process.env.NODE_ENV !== 'production') {
-            const error = await response.text();
-            // tslint:disable-next-line:no-console
-            console.error(error);
+            AntdNotification.error({
+                message: `Opps! ${response.statusText}`,
+                description: error
+            });
         }
     }
 });

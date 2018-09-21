@@ -14,7 +14,7 @@ import { formatDate } from '@/utilities';
 const BookingDetailPageWrapper = styled.div`
     display: block;
 `;
- 
+
 export interface BookingDetailPageProps {
     readonly booking: Booking;
 }
@@ -85,33 +85,41 @@ export class BookingDetailPage extends React.PureComponent<BookingDetailPageProp
                     </Flex>
                     <AntdDivider />
                     {
-                        transactionDTO ? transactionDTO.paymentMethodDTOS.map(payment => {
-                            return (
-                                <Flex key={payment.paymentMethod}>
-                                    <Flex.Item>
-                                        <span>{transactionUtils.getPaymentMethodLable(payment.paymentMethod)}</span>
-                                    </Flex.Item>
-                                    <Flex.Item>
-                                        <div style={{ textAlign: 'right' }}>
-                                            <BookingPrice price={payment.amount} />
-                                        </div>
-                                    </Flex.Item>
-                                </Flex>
-                            );
-                        }) :
-                            (
-                                <Flex>
-                                    <Flex.Item>
-                                        <span>TỔNG TIỀN</span>
-                                    </Flex.Item>
-                                    <Flex.Item>
-                                        <div style={{ textAlign: 'right' }}>
-                                            <BookingPrice price={booking.totalAmount} />
-                                        </div>
-                                    </Flex.Item>
-                                </Flex>
-                            )
+                        transactionDTO && (
+                            <div>
+                                <p>THÔNG TIN THANH TOÁN</p>
+                                {
+                                    transactionDTO.paymentMethodDTOS.map(payment => {
+                                        return (
+                                            <Flex key={payment.paymentMethod}>
+                                                <Flex.Item>
+                                                    <span>
+                                                        {transactionUtils.getPaymentMethodLable(payment.paymentMethod)}
+                                                    </span>
+                                                </Flex.Item>
+                                                <Flex.Item>
+                                                    <div style={{ textAlign: 'right' }}>
+                                                        <BookingPrice price={payment.amount} color="black" />
+                                                    </div>
+                                                </Flex.Item>
+                                            </Flex>
+                                        );
+                                    })
+                                }
+                            </div>
+                        )
                     }
+                    <AntdDivider dashed={true} />
+                    <Flex>
+                        <Flex.Item>
+                            <span>TỔNG TIỀN</span>
+                        </Flex.Item>
+                        <Flex.Item>
+                            <div style={{ textAlign: 'right' }}>
+                                <BookingPrice price={booking.totalAmount} />
+                            </div>
+                        </Flex.Item>
+                    </Flex>
                 </div>
                 <WhiteSpace size="xl" />
             </BookingDetailPageWrapper>

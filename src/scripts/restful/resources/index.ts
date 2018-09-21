@@ -11,4 +11,6 @@ export * from './service';
 export * from './spa';
 export * from './spa-branch';
 export * from './spa-branch-transaction';
+export * from './staff';
+export * from './staff-working-scheduler';
 export * from './user';

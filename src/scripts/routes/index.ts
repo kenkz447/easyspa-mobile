@@ -5,3 +5,5 @@ export * from './route-customer-detail';
 export * from './route-bookings';
 export * from './route-booking-detail';
 export * from './route-cashier';
+export * from './route-working-schedulers';
+export * from './route-staff-workings';

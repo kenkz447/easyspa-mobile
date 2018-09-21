@@ -18,7 +18,9 @@ import {
     RouteCustomerDetailLoadable,
     RouteCustomersLoadable,
     RouteHomeLoadable,
-    RouteLoginLoadable
+    RouteLoginLoadable,
+    RouteStaffWorkingsLoadable,
+    RouteWorkingSchedulerLoadable
 } from '@/routes';
 
 export function startup() {
@@ -29,7 +31,9 @@ export function startup() {
         RouteLoginLoadable,
         RouteBookingsLoadable,
         RouteBookingDetailLoadable,
-        RouteCashierLoadable
+        RouteCashierLoadable,
+        RouteWorkingSchedulerLoadable,
+        RouteStaffWorkingsLoadable
     ];
 
     const middlewares = applyMiddleware(appContextServiceMiddleware);

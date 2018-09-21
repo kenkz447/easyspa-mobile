@@ -7,6 +7,9 @@ import { routeBookingsInfo } from '@/routes/route-bookings/RouteBookingsInfo';
 import { routeCashierInfo } from '@/routes/route-cashier/RouteCashierInfo';
 import { routeCustomersInfo } from '@/routes/route-customer/RouteCustomersInfo';
 import { routeHomeInfo } from '@/routes/route-home/RouteHomeInfo';
+import {
+    routeWorkingSchedulerInfo
+} from '@/routes/route-working-schedulers/RouteWorkingSchedulerInfo';
 
 import { DrawerUserInfo } from './default-layout-drawer';
 
@@ -48,7 +51,8 @@ export class DefaultLayoutDrawer extends React.PureComponent<DefaultLayoutDrawer
             routeHomeInfo,
             routeBookingsInfo,
             routeCashierInfo,
-            routeCustomersInfo
+            routeCustomersInfo,
+            routeWorkingSchedulerInfo
         ];
 
         return (
