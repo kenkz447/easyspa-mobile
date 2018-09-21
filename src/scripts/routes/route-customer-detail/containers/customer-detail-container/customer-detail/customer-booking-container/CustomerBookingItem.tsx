@@ -39,7 +39,7 @@ export class CustomerBookingItem extends React.PureComponent<CustomerBookingItem
                 </List.Item>
 
                 {
-                    bookings.map(
+                    bookings.reverse().map(
                         booking => this.renderBookingItem(booking)
                     )
                 }

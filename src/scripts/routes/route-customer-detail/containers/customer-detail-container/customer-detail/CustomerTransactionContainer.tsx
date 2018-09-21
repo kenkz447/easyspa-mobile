@@ -14,11 +14,7 @@ import {
 } from '@/restful/resources/customer-transaction';
 import { formatCurrency, formatDate } from '@/utilities';
 
-import { ListTitle } from './customer-booking-container';
-
-const ItemContent = styled.div`
-    text-align: center;
-`;
+import { CustomerTransactionComponent } from './customer-transaction-container';
 
 interface CustomerTransactionContainerOwnprops {
     readonly customerId: number;
@@ -50,60 +46,9 @@ export class CustomerTransactionContainer extends React.PureComponent<CustomerTr
                         return (<div>Chưa có giao dịch nào</div>);
                     }
 
-                    return (
-                        <div>
-                            <List.Item>
-                                <ListTitle>
-                                    <Flex>
-                                        <Flex.Item>
-                                            <ItemContent>
-                                                <small>Ngày</small>
-                                            </ItemContent>
-                                        </Flex.Item>
-                                        <Flex.Item>
-                                            <ItemContent>
-                                                <small>Loại</small>
-                                            </ItemContent>
-                                        </Flex.Item>
-                                        <Flex.Item>
-                                            <ItemContent>
-                                                <small>Số tiền</small>
-                                            </ItemContent>
-                                        </Flex.Item>
-                                    </Flex>
-                                </ListTitle>
-                            </List.Item>
-                            {
-                                data.content!.map(
-                                    customerTransaction => this.renderCustomerTransaction(customerTransaction)
-                                )
-                            }
-                        </div>
-                    );
+                    return (<CustomerTransactionComponent customerTransactions={data.content!} />);
                 }}
             />
-        );
-    }
-
-    private renderCustomerTransaction(customerTransaction: CustomerTransaction) {
-        return (
-            <List.Item>
-                <Flex>
-                    <Flex.Item>
-                            <small>{formatDate(customerTransaction.created, 'DD/MM/YYYY HH:MM')}</small>
-                    </Flex.Item>
-                    <Flex.Item>
-                        <ItemContent>
-                            <small>{customerTransaction.paymentType}</small>
-                        </ItemContent>
-                    </Flex.Item>
-                    <Flex.Item>
-                        <ItemContent>
-                            <small>{formatCurrency(customerTransaction.total)}</small>
-                        </ItemContent>
-                    </Flex.Item>
-                </Flex>
-            </List.Item>
         );
     }
 }
