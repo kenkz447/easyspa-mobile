@@ -3,6 +3,8 @@ import * as React from 'react';
 import { RestfulRender } from 'react-restful';
 import styled from 'styled-components';
 
+import { withAppContext } from '@/app';
+import { DomainContext } from '@/domain';
 import { restfulFetcher, restfulStore } from '@/restful';
 import {
     CustomerServicePackage,
@@ -16,7 +18,7 @@ const ItemContent = styled.div`
     text-align: center;
 `;
 
-interface CustomerBookingContainerOwnProps {
+interface CustomerBookingContainerOwnProps extends Pick<DomainContext, 'currentSpaBranch'> {
     readonly customerId: number;
 }
 
@@ -24,6 +26,7 @@ interface Response {
     readonly customerServicePackages?: CustomerServicePackage[];
 }
 
+@withAppContext<DomainContext>('currentSpa')
 export class CustomerServicePackageContainer extends React.PureComponent<CustomerBookingContainerOwnProps> {
     render() {
         return (
@@ -35,7 +38,7 @@ export class CustomerServicePackageContainer extends React.PureComponent<Custome
                     type: 'body',
                     value: {
                         customerId: this.props.customerId,
-                        spaBranchId: 1
+                        spaBranchId: this.props.currentSpaBranch!.id
                     }
                 }]}
                 render={(renderProps) => {

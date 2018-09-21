@@ -1,7 +1,5 @@
-import { Flex, List } from 'antd-mobile';
 import * as React from 'react';
 import { RestfulRender } from 'react-restful';
-import styled from 'styled-components';
 
 import { restfulFetcher, restfulStore } from '@/restful';
 import {
@@ -12,7 +10,6 @@ import {
     CustomerTransaction,
     customerTransactionResources
 } from '@/restful/resources/customer-transaction';
-import { formatCurrency, formatDate } from '@/utilities';
 
 import { CustomerTransactionComponent } from './customer-transaction-container';
 
