@@ -4,7 +4,9 @@ import * as React from 'react';
 import { AppContextServices, AppCoreContext, withAppContext } from '@/app';
 import { DomainContext } from '@/domain';
 import { routeBookingsInfo } from '@/routes/route-bookings/RouteBookingsInfo';
-import { routeCustomerInfo } from '@/routes/route-customer/RouteCustomerInfo';
+import {
+    routeCustomersInfo
+} from '@/routes/route-customers/RouteCustomersInfo';
 import { routeHomeInfo } from '@/routes/route-home/RouteHomeInfo';
 
 import { DrawerUserInfo } from './default-layout-drawer';
@@ -42,7 +44,7 @@ export class DefaultLayoutDrawer extends React.PureComponent<DefaultLayoutDrawer
 
     private readonly getSidebar = () => {
         const { history } = this.props;
-        const items = [routeHomeInfo, routeBookingsInfo, routeCustomerInfo];
+        const items = [routeHomeInfo, routeBookingsInfo, routeCustomersInfo];
 
         return (
             <React.Fragment>

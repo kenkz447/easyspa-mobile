@@ -4,9 +4,9 @@ import { RestfulRender } from 'react-restful';
 import { restfulFetcher, restfulStore } from '@/restful';
 import { customerResources } from '@/restful/resources/customer';
 
-import { CustomerList } from './customer-container';
+import { CustomerList } from './customers-container';
 
-export class CustomerContainer extends React.PureComponent {
+export class CustomersContainer extends React.PureComponent {
     public render() {
         return (
             <RestfulRender

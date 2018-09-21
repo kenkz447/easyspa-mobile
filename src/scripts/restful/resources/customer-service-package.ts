@@ -3,7 +3,7 @@ import { RecordType, Resource, ResourceType } from 'react-restful';
 import { apiEntry } from '@/restful/environments';
 import { ServicePackage } from '@/restful/resources/service-package';
 
-import { DiscountUnnit, SpabranchTransaction } from './spa-branch-transaction';
+import { DiscountUnit, SpabranchTransaction } from './spa-branch-transaction';
 
 export type CustomerServicePackageStatus = 'ENABLE' | 'DISABLE';
 
@@ -16,7 +16,7 @@ export interface CustomerServicePackage extends RecordType {
     readonly servicePackage: ServicePackage;
     readonly customerName: string;
     readonly total: number;
-    readonly discountUnit: DiscountUnnit;
+    readonly discountUnit: DiscountUnit;
     readonly discount: number;
     readonly quantity: number;
     readonly numbersOfUse: number;

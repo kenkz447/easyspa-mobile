@@ -9,7 +9,6 @@ import { Customer, WithCustomerOwnProps } from '@/restful';
 export interface CustomerListProps extends
     Pick<DomainContext, 'history'>,
     WithCustomerOwnProps {
-
 }
 
 export const WrappedList = styled.div`
@@ -66,7 +65,6 @@ export class CustomerList extends React.PureComponent<CustomerListProps, Custome
                     }
                 </List>
             </WrappedList>
-
         );
     }
 }

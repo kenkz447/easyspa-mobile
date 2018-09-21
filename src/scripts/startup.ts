@@ -14,14 +14,14 @@ import { Authenticator } from '@/domain';
 import {
     RouteBookingsLoadable,
     RouteCustomerDetailLoadable,
-    RouteCustomerLoadable,
+    RouteCustomersLoadable,
     RouteHomeLoadable,
     RouteLoginLoadable
 } from '@/routes';
 
 export function startup() {
     const appRoutes = [
-        RouteCustomerLoadable,
+        RouteCustomersLoadable,
         RouteLoginLoadable,
         RouteCustomerDetailLoadable,
         RouteHomeLoadable,

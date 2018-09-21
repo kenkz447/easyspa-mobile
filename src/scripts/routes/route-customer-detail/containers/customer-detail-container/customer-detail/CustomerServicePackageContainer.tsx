@@ -26,7 +26,7 @@ interface Response {
     readonly customerServicePackages?: CustomerServicePackage[];
 }
 
-@withAppContext<DomainContext>('currentSpa')
+@withAppContext<DomainContext>('currentSpaBranch')
 export class CustomerServicePackageContainer extends React.PureComponent<CustomerBookingContainerOwnProps> {
     render() {
         return (

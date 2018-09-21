@@ -1,6 +1,6 @@
 export type PaymentMethod = 'CASH' | 'CARD' | 'TRANSFER' | 'DEBIT' | 'OTHER' | 'CASH_BACK';
 export type PaymentType = 'SALE' | 'BOOKING' | 'BUYING_SERVICE_PACKAGE';
-export type DiscountUnnit = 'MONEY' | 'PERCENTAGE';
+export type DiscountUnit = 'MONEY' | 'PERCENTAGE';
 export interface PaymentMethodItem {
     readonly amount: number;
     readonly paymentMethod: PaymentMethod;
