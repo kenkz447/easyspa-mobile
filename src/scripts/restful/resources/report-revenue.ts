@@ -1,27 +1,18 @@
-import { RecordType, Resource, ResourceType } from 'react-restful';
+import { RecordType, Resource } from 'react-restful';
 
-import { apiEntry, restfulStore } from '@/restful/environments';
+import { apiEntry } from '@/restful/environments';
+
+import { PaymentMethod } from './spa-branch-transaction';
 
 export interface RevenueDTO {
     readonly revenueTotal: number;
     readonly time: string;
 }
 
-export type PaymentMethod = 'CASH' | 'CARD' | 'ORTHER' | 'TRANSFER' | 'DEBIT' | 'CASH_BACK' | 'ALL';
-
 export interface ReportRevenue extends RecordType {
     readonly revenueDTOS: ReadonlyArray<RevenueDTO>;
     readonly paymentMethod: PaymentMethod;
 }
-
-export const reportRevenueResourceType = new ResourceType<ReportRevenue>({
-    store: restfulStore,
-    name: nameof<ReportRevenue>(),
-    schema: [{
-        field: 'paymentMethod',
-        type: 'PK'
-    }]
-});
 
 export interface ReportRevenuePayPayload {
     readonly from: string;
@@ -32,13 +23,7 @@ export interface ReportRevenuePayPayload {
 
 export const reportRevenuseResources = {
     getRevenueByPaymentMethod: new Resource<ReportRevenue[]>({
-        resourceType: reportRevenueResourceType,
         url: apiEntry('/reportservice/api/spa/statistic/revenue/payment-method'),
-        method: 'POST',
-        mapDataToStore: (reportRevenues, resourceType, store) => {
-            for (const reportRevenue of reportRevenues) {
-                store.dataMapping(resourceType, reportRevenue);
-            }
-        }
+        method: 'POST'
     })
 };

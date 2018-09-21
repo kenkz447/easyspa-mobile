@@ -5,6 +5,7 @@ import { AppContextServices, AppCoreContext, withAppContext } from '@/app';
 import { DomainContext } from '@/domain';
 import { routeBookingsInfo } from '@/routes/route-bookings/RouteBookingsInfo';
 import { routeCustomerInfo } from '@/routes/route-customer/RouteCustomerInfo';
+import { routeCashierInfo } from '@/routes/route-cashier/RouteCashierInfo';
 import { routeHomeInfo } from '@/routes/route-home/RouteHomeInfo';
 
 import { DrawerUserInfo } from './default-layout-drawer';
@@ -42,14 +43,20 @@ export class DefaultLayoutDrawer extends React.PureComponent<DefaultLayoutDrawer
 
     private readonly getSidebar = () => {
         const { history } = this.props;
-        const items = [routeHomeInfo, routeBookingsInfo, routeCustomerInfo];
+
+        const menuItems = [
+            routeHomeInfo,
+            routeBookingsInfo,
+            routeCashierInfo,
+            routeCustomerInfo
+        ];
 
         return (
             <React.Fragment>
                 <DrawerUserInfo />
                 <List>
                     {
-                        items.map(o => (
+                        menuItems.map(o => (
                             <List.Item
                                 key={o.path}
                                 className={o.isActive() ? 'active' : ''}

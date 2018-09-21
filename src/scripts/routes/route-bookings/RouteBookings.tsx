@@ -1,4 +1,4 @@
-import { WingBlank } from 'antd-mobile';
+import { WhiteSpace, WingBlank } from 'antd-mobile';
 import * as React from 'react';
 
 import { AppPage, AppPageProps, readyState, withAppContext } from '@/app';
@@ -29,9 +29,7 @@ export class RouteBookings extends AppPage<RouteBookingsProps> {
         return (
             <Page>
                 <DefaultLayout>
-                    <WingBlank>
-                        <BookingsContainer/>
-                    </WingBlank>
+                    <BookingsContainer />
                 </DefaultLayout>
             </Page >
         );

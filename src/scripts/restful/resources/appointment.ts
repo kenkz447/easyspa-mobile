@@ -4,6 +4,9 @@ import { AnotherTransaction } from './another-transaction';
 import { AppointmentContent } from './appointment-content';
 import { Booking } from './booking';
 
+export type AppointmentStatus = 'TEMP' | 'CONFIRMED' | 'CHECKIN' | 'CHECKOUT' | 'CANCEL';
+export type AppointmentStatusTitle = 'Mới' | 'Đã xác nhận' | 'Đang làm' | 'Đang chờ' | 'Xong' | 'Hủy';
+
 interface AppointmentDomain {
     readonly checkinTime?: string;
     readonly checkoutTime?: string;
@@ -26,9 +29,9 @@ interface AppointmentDomain {
     readonly totalKids?: number;
     readonly year?: number;
     readonly note?: string;
-    readonly appointmentType?: 'RECEPTION' | 'PHONE' | 'EMAIL' | 'ONLINE';
-    readonly appointmentContents?: Array<AppointmentContent>;
-    readonly appointmentStatus?: 'TEMP' | 'CONFIRMED' | 'CHECKIN' | 'CHECKOUT' | 'PAYED' | 'CANCEL';
+    readonly appointmentType: 'RECEPTION' | 'PHONE' | 'EMAIL' | 'ONLINE';
+    readonly appointmentContents: Array<AppointmentContent>;
+    readonly appointmentStatus: AppointmentStatus;
     readonly appointmentCustomerType?: Booking['bookingCustomerType'];
     readonly customerSex?: 'MALE' | 'FEMALE';
     readonly booking?: Booking;
@@ -54,18 +57,17 @@ export const allAppointmentType: AppointmentType[] = [
     { value: 'PHONE', title: 'Điện thoại' },
 ];
 
-interface AppointmentStatus {
+interface AppointmentStatusItem {
     readonly value: AppointmentDomain['appointmentStatus'];
     readonly title: string;
 }
 
-export const allApointmentStatus: AppointmentStatus[] = [
+export const allApointmentStatus: AppointmentStatusItem[] = [
     { value: 'TEMP', title: 'Mới' },
     { value: 'CONFIRMED', title: 'Đã xác nhận' },
     { value: 'CHECKIN', title: 'Checkin' },
     { value: 'CHECKOUT', title: 'Checkout' },
-    { value: 'CANCEL', title: 'Hủy bỏ' },
-    { value: 'PAYED', title: 'Đã thanh toán' }
+    { value: 'CANCEL', title: 'Hủy bỏ' }
 ];
 
 export interface AppointmentDiscount {
@@ -82,3 +84,20 @@ export interface ServiceDiscount {
     readonly discountServiceUnit: string;
     readonly serviceId: number;
 }
+
+export const appointmentUtils = {
+    getStatusInfo: (status: AppointmentStatus) => {
+        const statusInfo = allApointmentStatus.find(o => o.value === status);
+        let statusColor: string = '#FF9500';
+        if (status === 'CHECKIN') {
+            statusColor = '#5AC8FA';
+        } else if (status === 'CHECKOUT') {
+            statusColor = '#4CD964';
+        }
+
+        return {
+            title: statusInfo!.title,
+            color: statusColor
+        };
+    }
+};

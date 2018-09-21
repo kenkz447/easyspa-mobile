@@ -12,7 +12,9 @@ import {
 import { loginPath } from '@/configs';
 import { Authenticator } from '@/domain';
 import {
+    RouteBookingDetailLoadable,
     RouteBookingsLoadable,
+    RouteCashierLoadable,
     RouteCustomerDetailLoadable,
     RouteCustomerLoadable,
     RouteHomeLoadable,
@@ -22,10 +24,12 @@ import {
 export function startup() {
     const appRoutes = [
         RouteCustomerLoadable,
-        RouteLoginLoadable,
         RouteCustomerDetailLoadable,
         RouteHomeLoadable,
-        RouteBookingsLoadable
+        RouteLoginLoadable,
+        RouteBookingsLoadable,
+        RouteBookingDetailLoadable,
+        RouteCashierLoadable
     ];
 
     const middlewares = applyMiddleware(appContextServiceMiddleware);

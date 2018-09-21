@@ -65,7 +65,7 @@ export const userResources = {
         url: apiEntry('/accountservice/api/users/:id'),
         method: 'DELETE',
         afterFetch: (params, fetchResult, meta, resourceType, store) => {
-            store.removeRecord(resourceType, meta!.deletedUser);
+            store.removeRecord(resourceType!, meta!.deletedUser);
         }
     })
 };

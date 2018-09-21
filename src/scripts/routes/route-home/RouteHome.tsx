@@ -36,13 +36,11 @@ export class RouteHome extends AppPage<RouteHomeProps> {
         return (
             <Page>
                 <DefaultLayout>
-                    <WingBlank>
-                        <HomeChartContainer />
-                        <HomeRevenuesContainer />
-                        <HomeInvoiceContainer />
-                        <HomeBookingContainer />
-                        <HomeCustomerContainer />
-                    </WingBlank>
+                    <HomeChartContainer />
+                    <HomeRevenuesContainer />
+                    <HomeInvoiceContainer />
+                    <HomeBookingContainer />
+                    <HomeCustomerContainer />
                 </DefaultLayout>
             </Page >
         );
