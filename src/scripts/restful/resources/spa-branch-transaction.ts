@@ -12,7 +12,7 @@ export interface PaymentMethodItem {
 export interface TransactionDTO {
     readonly invoiceCode: string;
     readonly note?: string;
-    readonly paymentMethodDTOS?: PaymentMethodItem[];
+    readonly paymentMethodDTOS: PaymentMethodItem[];
 }
 
 export interface SpabranchTransaction {

@@ -1,1 +1,1 @@
-export * from './RouteCustomerLoadable';
+export * from './RouteCustomersLoadable';

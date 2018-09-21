@@ -1,9 +1,7 @@
 import * as React from 'react';
 import { RestfulRender } from 'react-restful';
 
-import { restfulFetcher, restfulStore } from '@/restful';
-import { customerResources } from '@/restful/resources/customer';
-import { getUrlSearchParam } from '@/utilities';
+import { customerResources, restfulFetcher, restfulStore } from '@/restful';
 
 import { CustomerDetail } from './customer-detail-container';
 

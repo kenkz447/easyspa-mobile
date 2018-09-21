@@ -3,19 +3,13 @@ import * as React from 'react';
 import styled from 'styled-components';
 
 import { Customer } from '@/restful';
-import {
-    CustomerTransactionContainer
-} from '@/routes/route-customer-detail/containers/customer-detail-container/customer-detail';
 
 import {
-    CustomerBookingContainer
-} from './customer-detail/CustomerBookingContainer';
-import {
-    CustomerOverviewContainer
-} from './customer-detail/CustomerOverviewContainer';
-import {
-    CustomerServicePackageContainer
-} from './customer-detail/CustomerServicePackageContainer';
+    CustomerBookingContainer,
+    CustomerOverviewContainer,
+    CustomerServicePackageContainer,
+    CustomerTransactionContainer
+} from './customer-detail';
 
 const CustomerInfo = styled.div`
     color: #BDBDBD;
@@ -33,7 +27,7 @@ export class CustomerDetail extends React.PureComponent<CustomerDetailOwnProps> 
             { title: 'Giao dịch' }
         ];
         return (
-            <>
+            <React.Fragment>
                 <Card>
                     <Card.Body>
                         <h2>{customer.name}</h2>
@@ -45,9 +39,9 @@ export class CustomerDetail extends React.PureComponent<CustomerDetailOwnProps> 
                     <CustomerOverviewContainer customerId={customer.id} />
                     <CustomerBookingContainer customerId={customer.id} />
                     <CustomerServicePackageContainer customerId={customer.id} />
-                    <CustomerTransactionContainer customerId={customer.id}/>
+                    <CustomerTransactionContainer customerId={customer.id} />
                 </Tabs>
-            </>
+            </React.Fragment>
         );
     }
 }

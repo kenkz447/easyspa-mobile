@@ -9,12 +9,12 @@ const people = (
     </svg>
 );
 
-export const routeCustomerInfo: RouteInfo = {
+export const routeCustomersInfo: RouteInfo = {
     path: '/customer',
     title: 'Khách hàng',
     icon: people,
     isActive: () => {
         const currentPath = window.location.pathname;
-        return currentPath === routeCustomerInfo.path;
+        return currentPath === routeCustomersInfo.path;
     }
 };

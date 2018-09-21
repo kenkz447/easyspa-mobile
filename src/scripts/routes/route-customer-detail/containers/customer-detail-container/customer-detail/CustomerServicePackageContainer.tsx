@@ -4,12 +4,14 @@ import { RestfulRender } from 'react-restful';
 import styled from 'styled-components';
 
 import { withAppContext } from '@/app';
+import { NoContent } from '@/components/domain-components/generic/NoContent';
 import { DomainContext } from '@/domain';
-import { restfulFetcher, restfulStore } from '@/restful';
 import {
     CustomerServicePackage,
-    customerServicePackageResources
-} from '@/restful/resources/customer-service-package';
+    customerServicePackageResources,
+    restfulFetcher,
+    restfulStore
+} from '@/restful';
 import { formatDate } from '@/utilities';
 
 import { ListTitle } from './customer-booking-container';
@@ -22,11 +24,7 @@ interface CustomerBookingContainerOwnProps extends Pick<DomainContext, 'currentS
     readonly customerId: number;
 }
 
-interface Response {
-    readonly customerServicePackages?: CustomerServicePackage[];
-}
-
-@withAppContext<DomainContext>('currentSpa')
+@withAppContext<DomainContext>('currentSpaBranch')
 export class CustomerServicePackageContainer extends React.PureComponent<CustomerBookingContainerOwnProps> {
     render() {
         return (
@@ -42,13 +40,17 @@ export class CustomerServicePackageContainer extends React.PureComponent<Custome
                     }
                 }]}
                 render={(renderProps) => {
-                    const data = renderProps.data as Response;
+                    const { data } = renderProps;
+
                     if (!data) {
                         return null;
                     }
 
-                    if (data.customerServicePackages!.length === 0) {
-                        return (<div>Chưa mua gói dịch vụ nào</div>);
+                    if (
+                        !data.customerServicePackages ||
+                        !data.customerServicePackages.length
+                    ) {
+                        return (<NoContent>Chưa mua gói dịch vụ nào</NoContent>);
                     }
 
                     return (
@@ -91,7 +93,7 @@ export class CustomerServicePackageContainer extends React.PureComponent<Custome
             <List.Item>
                 <Flex>
                     <Flex.Item>
-                            <small>{customerServicePackage.servicePackage.name}</small>
+                        <small>{customerServicePackage.servicePackage.name}</small>
                     </Flex.Item>
                     <Flex.Item>
                         <ItemContent>

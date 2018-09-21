@@ -93,6 +93,10 @@ export const appointmentUtils = {
             statusColor = '#5AC8FA';
         } else if (status === 'CHECKOUT') {
             statusColor = '#4CD964';
+        } else if (status === 'CANCEL') {
+            statusColor = 'red';
+        } else if (status === 'TEMP') {
+            statusColor = 'yellow';
         }
 
         return {

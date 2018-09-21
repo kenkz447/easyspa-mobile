@@ -2,9 +2,9 @@ import * as React from 'react';
 import { RestfulRender } from 'react-restful';
 
 import { withAppContext } from '@/app';
+import { NoContent } from '@/components/domain-components/generic/NoContent';
 import { DomainContext } from '@/domain';
-import { restfulFetcher, restfulStore } from '@/restful';
-import { bookingResources } from '@/restful/resources/booking';
+import { bookingResources, restfulFetcher, restfulStore } from '@/restful';
 
 import { CustomerBookingItem } from './customer-booking-container';
 
@@ -37,7 +37,7 @@ export class CustomerBookingContainer extends React.PureComponent<CustomerBookin
                     }
 
                     if (data.length === 0) {
-                        return <div>Chưa có lịch hẹn</div>;
+                        return <NoContent>Chưa có lịch hẹn</NoContent>;
                     }
 
                     return (

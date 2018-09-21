@@ -4,18 +4,16 @@ import { AppPage, AppPageProps, readyState, withAppContext } from '@/app';
 import { Page } from '@/components';
 import { DomainContext } from '@/domain';
 import { DefaultLayout } from '@/layout';
-import {
-    CustomerContainer
-} from '@/routes/route-customer/containers/CustomerContainer';
-import { routeCustomerInfo } from '@/routes/route-customer/RouteCustomerInfo';
-import { formatDate } from '@/utilities';
 
-type RouteCustomerProps = AppPageProps;
+import { CustomersContainer } from './containers';
+import { routeCustomersInfo } from './RouteCustomersInfo';
+
+type RouteCustomersProps = AppPageProps;
 
 @readyState()
 @withAppContext()
-export class RouteCustomer extends AppPage<RouteCustomerProps> {
-    constructor(props: RouteCustomerProps) {
+export class RouteCustomers extends AppPage<RouteCustomersProps> {
+    constructor(props: RouteCustomersProps) {
         super(props);
         const { setAppContext } = this.props;
 
@@ -29,7 +27,7 @@ export class RouteCustomer extends AppPage<RouteCustomerProps> {
         return (
             <Page>
                 <DefaultLayout>
-                    <CustomerContainer />
+                    <CustomersContainer />
                 </DefaultLayout>
             </Page>
         );
@@ -38,7 +36,7 @@ export class RouteCustomer extends AppPage<RouteCustomerProps> {
     private readonly getNavbarTitle = () => {
         return (
             <div style={{ textAlign: 'center', lineHeight: 1 }}>
-                {routeCustomerInfo.title}<br />
+                {routeCustomersInfo.title}<br />
             </div>
         );
     }

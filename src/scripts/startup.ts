@@ -16,14 +16,14 @@ import {
     RouteBookingsLoadable,
     RouteCashierLoadable,
     RouteCustomerDetailLoadable,
-    RouteCustomerLoadable,
+    RouteCustomersLoadable,
     RouteHomeLoadable,
     RouteLoginLoadable
 } from '@/routes';
 
 export function startup() {
     const appRoutes = [
-        RouteCustomerLoadable,
+        RouteCustomersLoadable,
         RouteCustomerDetailLoadable,
         RouteHomeLoadable,
         RouteLoginLoadable,

@@ -1,4 +1,4 @@
-import { Accordion, Flex, List } from 'antd-mobile';
+import { Accordion, Flex, List, WhiteSpace } from 'antd-mobile';
 import * as React from 'react';
 import { RestfulRender } from 'react-restful';
 import styled from 'styled-components';
@@ -6,15 +6,21 @@ import styled from 'styled-components';
 import { customerResources, restfulFetcher, restfulStore } from '@/restful';
 import {
     CustomerServicePackage,
-    customerServicePackageResources
-} from '@/restful/resources/customer-service-package';
-import { Service } from '@/restful/resources/service';
+    customerServicePackageResources,
+    Service
+} from '@/restful';
 import { formatDate } from '@/utilities';
-
-import { ListTitle } from './customer-booking-container';
 
 const Item = styled.div`
     color: #BDBDBD;
+`;
+
+const OverviewList = styled.div`
+    .am-list {
+        &-body {
+            border: 0;
+        }
+    }
 `;
 
 interface CustomerOverviewContainerOwnProps {
@@ -66,47 +72,51 @@ export class CustomerOverviewContainer extends React.PureComponent<CustomerOverv
 
     private renderUI(data: Response) {
         return (
-            <div>
-                <List.Item>
-                    <Flex>
-                        <Flex.Item>
-                            Tổng số lần đặt trước
+            <OverviewList>
+                <WhiteSpace />
+                <List>
+                    <List.Item>
+                        <Flex>
+                            <Flex.Item>
+                                Tổng số lần đặt trước
                             </Flex.Item>
-                        <Flex.Item>
-                            <Item>{data.totalBooking}</Item>
-                        </Flex.Item>
-                    </Flex>
-                </List.Item>
-                <List.Item>
-                    <Flex>
-                        <Flex.Item>
-                            Tổng số lần đến
+                            <Flex.Item>
+                                <Item>{data.totalBooking}</Item>
                             </Flex.Item>
-                        <Flex.Item>
-                            <Item>{data.totalCheckinBooking}</Item>
-                        </Flex.Item>
-                    </Flex>
-                </List.Item>
-                <List.Item>
-                    <Flex>
-                        <Flex.Item>
-                            Tổng số lần huỷ
+                        </Flex>
+                    </List.Item>
+                    <List.Item>
+                        <Flex>
+                            <Flex.Item>
+                                Tổng số lần đến
                             </Flex.Item>
-                        <Flex.Item>
-                            <Item>{data.totalCancelBooking}</Item>
-                        </Flex.Item>
-                    </Flex>
-                </List.Item>
-                <List.Item>
-                    <Flex>
-                        <Flex.Item>
-                            Ghé thăm lần cuối
+                            <Flex.Item>
+                                <Item>{data.totalCheckinBooking}</Item>
                             </Flex.Item>
-                        <Flex.Item>
-                            <Item>{formatDate(data.lastTimeVisit!, 'DD/MM/YYYY HH:MM')}</Item>
-                        </Flex.Item>
-                    </Flex>
-                </List.Item>
+                        </Flex>
+                    </List.Item>
+                    <List.Item>
+                        <Flex>
+                            <Flex.Item>
+                                Tổng số lần huỷ
+                            </Flex.Item>
+                            <Flex.Item>
+                                <Item>{data.totalCancelBooking}</Item>
+                            </Flex.Item>
+                        </Flex>
+                    </List.Item>
+                    <List.Item>
+                        <Flex>
+                            <Flex.Item>
+                                Ghé thăm lần cuối
+                            </Flex.Item>
+                            <Flex.Item>
+                                <Item>{formatDate(data.lastTimeVisit!, 'DD/MM/YYYY HH:MM')}</Item>
+                            </Flex.Item>
+                        </Flex>
+                    </List.Item>
+                </List>
+                <WhiteSpace />
                 <Accordion accordion={false}>
                     <Accordion.Panel header="Yêu thích">
                         {
@@ -131,7 +141,7 @@ export class CustomerOverviewContainer extends React.PureComponent<CustomerOverv
                         }
                     </Accordion.Panel>
                 </Accordion>
-            </div >
+            </OverviewList>
         );
     }
 }

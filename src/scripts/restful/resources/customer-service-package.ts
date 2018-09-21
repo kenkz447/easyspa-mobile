@@ -36,8 +36,12 @@ export const customerServicePackageResourceType = new ResourceType({
     }]
 });
 
+interface GetCustomerServicePackageByCustomerResponse {
+    readonly customerServicePackages: CustomerServicePackage[] | null;
+}
+
 export const customerServicePackageResources = {
-    getCustomerServicePackageByCustomerId: new Resource<CustomerServicePackage[]>({
+    getCustomerServicePackageByCustomerId: new Resource<GetCustomerServicePackageByCustomerResponse>({
         resourceType: customerServicePackageResourceType,
         url: apiEntry('/productservice/api/customer-service-package/customer'),
         method: 'POST'

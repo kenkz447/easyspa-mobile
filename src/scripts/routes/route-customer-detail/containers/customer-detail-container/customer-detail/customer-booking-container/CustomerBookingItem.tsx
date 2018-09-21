@@ -2,7 +2,7 @@ import { Flex, List } from 'antd-mobile';
 import * as React from 'react';
 import styled from 'styled-components';
 
-import { Booking } from '@/restful/resources/booking';
+import { appointmentUtils, Booking } from '@/restful';
 import { formatCurrency, formatDate } from '@/utilities';
 
 const Status = styled.small`
@@ -20,8 +20,10 @@ interface CustomerBookingItemOwnProps {
 export class CustomerBookingItem extends React.PureComponent<CustomerBookingItemOwnProps> {
     render() {
         const { bookings } = this.props;
+        const reversedBookings = bookings.reverse();
+
         return (
-            <>
+            <React.Fragment>
                 <List.Item>
                     <ListTitle>
                         <Flex className="text-center">
@@ -37,18 +39,14 @@ export class CustomerBookingItem extends React.PureComponent<CustomerBookingItem
                         </Flex>
                     </ListTitle>
                 </List.Item>
-
                 {
-                    bookings.reverse().map(
-                        booking => this.renderBookingItem(booking)
-                    )
+                    reversedBookings.map(this.renderBookingItem)
                 }
-            </>
-
+            </React.Fragment>
         );
     }
 
-    private renderBookingItem(booking: Booking) {
+    private readonly renderBookingItem = (booking: Booking) => {
         return (
             <List.Item>
                 <Flex key={booking.id}>
@@ -67,20 +65,12 @@ export class CustomerBookingItem extends React.PureComponent<CustomerBookingItem
         );
     }
 
-    private renderBookingStatus(appointmentStatus: Booking['appointmentStatus']) {
-        switch (appointmentStatus) {
-            default:
-                return null;
-            case 'CANCEL':
-                return (<Status color="red">Huỷ</Status>);
-            case 'CHECKIN':
-                return (<Status color="blue">Đang làm</Status>);
-            case 'CHECKOUT':
-                return (<Status color="green">Xong</Status>);
-            case 'CONFIRMED':
-                return (<Status color="orange">Đã xác nhận</Status>);
-            case 'TEMP':
-                return (<Status color="yellow">Chưa xác nhận</Status>);
-        }
+    private readonly renderBookingStatus = (appointmentStatus: Booking['appointmentStatus']) => {
+        const statusInfo = appointmentUtils.getStatusInfo(appointmentStatus);
+        return (
+            <Status color={statusInfo.color}>
+                {statusInfo.title}
+            </Status>
+        );
     }
 }

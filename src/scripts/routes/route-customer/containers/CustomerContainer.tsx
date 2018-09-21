@@ -1,12 +1,11 @@
 import * as React from 'react';
 import { RestfulRender } from 'react-restful';
 
-import { restfulFetcher, restfulStore } from '@/restful';
-import { customerResources } from '@/restful/resources/customer';
+import { customerResources, restfulFetcher, restfulStore } from '@/restful';
 
 import { CustomerList } from './customer-container';
 
-export class CustomerContainer extends React.PureComponent {
+export class CustomersContainer extends React.PureComponent {
     public render() {
         return (
             <RestfulRender

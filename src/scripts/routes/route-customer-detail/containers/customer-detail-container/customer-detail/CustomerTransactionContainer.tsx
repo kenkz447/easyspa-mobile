@@ -1,15 +1,12 @@
 import * as React from 'react';
 import { RestfulRender } from 'react-restful';
 
-import { restfulFetcher, restfulStore } from '@/restful';
-import {
-    CustomerServicePackage,
-    customerServicePackageResources
-} from '@/restful/resources/customer-service-package';
 import {
     CustomerTransaction,
-    customerTransactionResources
-} from '@/restful/resources/customer-transaction';
+    customerTransactionResources,
+    restfulFetcher,
+    restfulStore
+} from '@/restful';
 
 import { CustomerTransactionComponent } from './customer-transaction-container';
 

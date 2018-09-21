@@ -2,8 +2,7 @@ import { Flex, List } from 'antd-mobile';
 import * as React from 'react';
 import styled from 'styled-components';
 
-import { CustomerTransaction } from '@/restful/resources/customer-transaction';
-import { PaymentType } from '@/restful/resources/spa-branch-transaction';
+import { CustomerTransaction, PaymentType } from '@/restful';
 import { formatCurrency, formatDate } from '@/utilities';
 
 import { ListTitle } from '../customer-booking-container';
@@ -23,7 +22,7 @@ const PaymentType = styled.small`
 export class CustomerTransactionComponent extends React.PureComponent<CustomerTransactionOwnProps> {
     render() {
         return (
-            <>
+            <React.Fragment>
                 <List.Item>
                     <ListTitle>
                         <Flex>
@@ -50,7 +49,7 @@ export class CustomerTransactionComponent extends React.PureComponent<CustomerTr
                         customerTransaction => this.renderCustomerTransactionItem(customerTransaction)
                     )
                 }
-            </>
+            </React.Fragment>
         );
     }
     private renderCustomerTransactionItem(customerTransaction: CustomerTransaction) {

@@ -1,1 +1,1 @@
-export * from './customer-detail-container';
+export * from './CustomerDetailContainer';

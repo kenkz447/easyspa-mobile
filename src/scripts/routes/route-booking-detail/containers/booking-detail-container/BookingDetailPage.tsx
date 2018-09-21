@@ -14,7 +14,7 @@ import { formatDate } from '@/utilities';
 const BookingDetailPageWrapper = styled.div`
     display: block;
 `;
-
+ 
 export interface BookingDetailPageProps {
     readonly booking: Booking;
 }
