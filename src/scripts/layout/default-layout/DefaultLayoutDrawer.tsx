@@ -4,6 +4,7 @@ import * as React from 'react';
 import { AppContextServices, AppCoreContext, withAppContext } from '@/app';
 import { DomainContext } from '@/domain';
 import { routeBookingsInfo } from '@/routes/route-bookings/RouteBookingsInfo';
+import { routeCustomerInfo } from '@/routes/route-customer/RouteCustomerInfo';
 import { routeCashierInfo } from '@/routes/route-cashier/RouteCashierInfo';
 import { routeHomeInfo } from '@/routes/route-home/RouteHomeInfo';
 
@@ -46,7 +47,8 @@ export class DefaultLayoutDrawer extends React.PureComponent<DefaultLayoutDrawer
         const menuItems = [
             routeHomeInfo,
             routeBookingsInfo,
-            routeCashierInfo
+            routeCashierInfo,
+            routeCustomerInfo
         ];
 
         return (

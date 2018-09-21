@@ -24,7 +24,6 @@ import {
 export function startup() {
     const appRoutes = [
         RouteCustomerLoadable,
-        RouteLoginLoadable,
         RouteCustomerDetailLoadable,
         RouteHomeLoadable,
         RouteLoginLoadable,

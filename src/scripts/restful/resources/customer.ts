@@ -50,15 +50,11 @@ export const customerResources = {
         resourceType: customerResourceType,
         url: apiEntry('/customerservice/api/customer-spa-branches/:customerId'),
         method: 'GET'
-    })
-    ,
-    updateUser: new Resource<Customer>({
+    }),
+    getCustomerOverviewByCustomerId: new Resource<Customer> ({
         resourceType: customerResourceType,
-        url: apiEntry('/customerservice/api/customer-spa-branches'),
-        method: 'PUT',
-        mapDataToStore: (updatedCustomer, resourceType, store) => {
-            store.dataMapping(resourceType, updatedCustomer);
-        }
+        url: apiEntry('/customerservice/api/customer-spa-branches/profile-overview/:customerId'),
+        method: 'GET'
     })
 };
 

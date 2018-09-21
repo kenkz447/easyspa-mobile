@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 
-import { AppContextServices, AppCoreContext, PageProps } from '@/app/core';
+import { AppContextServices, PageProps } from '@/app/core';
 import { eventHandlers } from '@/domain';
 
 export type AppPageProps<T = {}> =

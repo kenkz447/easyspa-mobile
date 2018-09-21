@@ -1,4 +1,4 @@
-import { List } from 'antd-mobile';
+import { List, SearchBar } from 'antd-mobile';
 import * as React from 'react';
 import styled from 'styled-components';
 
@@ -12,27 +12,44 @@ export interface CustomerListProps extends
 
 }
 
-const WrappedList = styled.div`
+export const WrappedList = styled.div`
     width: 100%;
 `;
 
 interface CustomerListState {
-    readonly selectedCustomer?: Customer;
+    // tslint:disable-next-line:readonly-keyword
+    searchTerm?: string;
 }
 
 @withAppContext<DomainContext>('history')
 export class CustomerList extends React.PureComponent<CustomerListProps, CustomerListState> {
-    readonly state: CustomerListState = {};
+    constructor(props: CustomerListProps) {
+        super(props);
+        this.state = {
+            searchTerm: ''
+        };
+    }
 
     public render() {
         const { customers, history } = this.props;
-        const { selectedCustomer } = this.state;
-
+        const { searchTerm } = this.state;
+        let filteredCustomer = customers;
+        if (searchTerm) {
+            filteredCustomer = customers.filter(
+                customer => customer.name.includes(searchTerm)
+                    || customer.email && customer.email.includes(searchTerm)
+                    || customer.mobile && customer.mobile.includes(searchTerm)
+            );
+        }
         return (
             <WrappedList>
+                <SearchBar
+                    cancelText="Huỷ"
+                    onChange={(value) => this.setState({ searchTerm: value })}
+                />
                 <List>
                     {
-                        customers.map(customer => {
+                        filteredCustomer.map(customer => {
                             const toCustomerDetailPath = String(`/customer/${customer.id}`);
                             return (
                                 <List.Item

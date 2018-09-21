@@ -70,6 +70,11 @@ export const bookingResources = {
             }
         }
     }),
+    getBookingByCustomerAndRangeTime: new Resource<Booking[]>({
+        resourceType: bookingResourceType,
+        url: apiEntry('/customerservice/api/customer-spa-branches/bookings'),
+        method: 'POST'
+    }),
     getById: new Resource<Booking>({
         resourceType: bookingResourceType,
         url: apiEntry('/bookingservice/api/bookings/:id'),
