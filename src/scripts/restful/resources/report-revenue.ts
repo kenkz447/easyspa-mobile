@@ -2,12 +2,12 @@ import { RecordType, Resource } from 'react-restful';
 
 import { apiEntry } from '@/restful/environments';
 
+import { PaymentMethod } from './spa-branch-transaction';
+
 export interface RevenueDTO {
     readonly revenueTotal: number;
     readonly time: string;
 }
-
-export type PaymentMethod = 'CASH' | 'CARD' | 'ORTHER' | 'TRANSFER' | 'DEBIT' | 'CASH_BACK' | 'ALL';
 
 export interface ReportRevenue extends RecordType {
     readonly revenueDTOS: ReadonlyArray<RevenueDTO>;

@@ -7,11 +7,8 @@ import {
     BookingPreviewService,
     BookingStatusTag
 } from '@/components';
-import { AntdDivider } from '@/components/antd-component/AntdDivider';
-import {
-    BookingPrice
-} from '@/components/domain-components/booking/BookingPrice';
-import { Booking, bookingUtils } from '@/restful';
+import { AntdDivider, BookingPrice } from '@/components';
+import { Booking, bookingUtils, transactionUtils } from '@/restful';
 import { formatDate } from '@/utilities';
 
 const BookingDetailPageWrapper = styled.div`
@@ -27,6 +24,9 @@ export class BookingDetailPage extends React.PureComponent<BookingDetailPageProp
         const { booking } = this.props;
         const services = bookingUtils.getServices(booking);
         const compledBookingTime = bookingUtils.getCompletedTime(booking);
+
+        const { transactionDTO } = booking;
+
         return (
             <BookingDetailPageWrapper>
                 <WhiteSpace />
@@ -84,16 +84,34 @@ export class BookingDetailPage extends React.PureComponent<BookingDetailPageProp
                         </Flex.Item>
                     </Flex>
                     <AntdDivider />
-                    <Flex>
-                        <Flex.Item>
-                            <span>TỔNG TIỀN</span>
-                        </Flex.Item>
-                        <Flex.Item>
-                            <div style={{ textAlign: 'right' }}>
-                                <BookingPrice price={booking.totalAmount} />
-                            </div>
-                        </Flex.Item>
-                    </Flex>
+                    {
+                        transactionDTO ? transactionDTO.paymentMethodDTOS.map(payment => {
+                            return (
+                                <Flex key={payment.paymentMethod}>
+                                    <Flex.Item>
+                                        <span>{transactionUtils.getPaymentMethodLable(payment.paymentMethod)}</span>
+                                    </Flex.Item>
+                                    <Flex.Item>
+                                        <div style={{ textAlign: 'right' }}>
+                                            <BookingPrice price={payment.amount} />
+                                        </div>
+                                    </Flex.Item>
+                                </Flex>
+                            );
+                        }) :
+                            (
+                                <Flex>
+                                    <Flex.Item>
+                                        <span>TỔNG TIỀN</span>
+                                    </Flex.Item>
+                                    <Flex.Item>
+                                        <div style={{ textAlign: 'right' }}>
+                                            <BookingPrice price={booking.totalAmount} />
+                                        </div>
+                                    </Flex.Item>
+                                </Flex>
+                            )
+                    }
                 </div>
                 <WhiteSpace size="xl" />
             </BookingDetailPageWrapper>

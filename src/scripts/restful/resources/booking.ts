@@ -77,6 +77,26 @@ export const bookingResources = {
         mapDataToStore: (booking, resourceTYpe, store) => {
             store.dataMapping(resourceTYpe, booking);
         }
+    }),
+    getNotPay: new Resource<Booking[]>({
+        resourceType: bookingResourceType,
+        url: apiEntry('/bookingservice/api/bookings/spa-branch/:spaBranchId/not-payed'),
+        method: 'POST',
+        mapDataToStore: (bookings, resourceTYpe, store) => {
+            for (const booking of bookings) {
+                store.dataMapping(resourceTYpe, booking);
+            }
+        }
+    }),
+    getPaid: new Resource<Booking[]>({
+        resourceType: bookingResourceType,
+        url: apiEntry('/bookingservice/api/bookings/spa-branch/:spaBranchId/payed'),
+        method: 'POST',
+        mapDataToStore: (bookings, resourceTYpe, store) => {
+            for (const booking of bookings) {
+                store.dataMapping(resourceTYpe, booking);
+            }
+        }
     })
 };
 
