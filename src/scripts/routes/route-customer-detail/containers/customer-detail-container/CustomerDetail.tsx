@@ -3,6 +3,9 @@ import * as React from 'react';
 import styled from 'styled-components';
 
 import { Customer } from '@/restful';
+import {
+    CustomerTransactionContainer
+} from '@/routes/route-customer-detail/containers/customer-detail-container/customer-detail';
 
 import {
     CustomerBookingContainer
@@ -27,7 +30,7 @@ export class CustomerDetail extends React.PureComponent<CustomerDetailOwnProps> 
             { title: 'Thống kê' },
             { title: 'Lịch hẹn' },
             { title: 'Liệu trình' },
-            { title: 'Lịch sử giao dịch' }
+            { title: 'Giao dịch' }
         ];
         return (
             <>
@@ -42,7 +45,7 @@ export class CustomerDetail extends React.PureComponent<CustomerDetailOwnProps> 
                     <CustomerOverviewContainer customerId={customer.id} />
                     <CustomerBookingContainer customerId={customer.id} />
                     <CustomerServicePackageContainer customerId={customer.id} />
-                    <div>Lịch sử giao dịch</div>
+                    <CustomerTransactionContainer customerId={customer.id}/>
                 </Tabs>
             </>
         );
