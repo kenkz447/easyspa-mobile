@@ -9,12 +9,16 @@ const dashboard = (
     </svg>
 );
 
-export const routeHomeInfo: RouteInfo = {
-    path: '/',
-    title: 'Tổng quan',
+export const routeBookingNewInfo: RouteInfo = {
+    path: '/bookings/new',
+    title: 'Tạo lịch hẹn',
     icon: dashboard,
     isActive: () => {
         const currentPath = window.location.pathname;
-        return currentPath === routeHomeInfo.path;
+        return currentPath === routeBookingNewInfo.path;
     }
+};
+
+export const getRouteBookingNewUrl = () => {
+    return routeBookingNewInfo.path;
 };

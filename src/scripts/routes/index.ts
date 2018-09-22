@@ -7,3 +7,4 @@ export * from './route-booking-detail';
 export * from './route-cashier';
 export * from './route-working-schedulers';
 export * from './route-staff-workings';
+export * from './route-booking-new';
