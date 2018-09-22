@@ -6,7 +6,7 @@ import { NoContent } from '@/components/domain-components/generic/NoContent';
 import { DomainContext } from '@/domain';
 import { bookingResources, restfulFetcher, restfulStore } from '@/restful';
 
-import { CustomerBookingItem } from './customer-booking-container';
+import { CustomerBookingComponent } from './customer-booking-container';
 
 interface CustomerBookingContainerOwnProps extends Pick<DomainContext, 'currentSpaBranch'> {
     readonly customerId: number;
@@ -41,7 +41,7 @@ export class CustomerBookingContainer extends React.PureComponent<CustomerBookin
                     }
 
                     return (
-                        <CustomerBookingItem bookings={data} />
+                        <CustomerBookingComponent bookings={data} />
                     );
                 }}
             />

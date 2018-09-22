@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { RestfulRender } from 'react-restful';
 
+import { NoContent } from '@/components/domain-components/generic/NoContent';
 import {
     CustomerTransaction,
     customerTransactionResources,
@@ -37,7 +38,7 @@ export class CustomerTransactionContainer extends React.PureComponent<CustomerTr
                     }
 
                     if (data.content!.length === 0) {
-                        return (<div>Chưa có giao dịch nào</div>);
+                        return (<NoContent>Chưa có giao dịch nào</NoContent>);
                     }
 
                     return (<CustomerTransactionComponent customerTransactions={data.content!} />);

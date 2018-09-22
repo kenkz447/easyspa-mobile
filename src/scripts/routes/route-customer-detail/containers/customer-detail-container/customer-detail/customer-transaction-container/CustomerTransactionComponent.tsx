@@ -11,7 +11,7 @@ interface CustomerTransactionOwnProps {
     readonly customerTransactions: CustomerTransaction[];
 }
 
-const ItemContent = styled.div`
+const Center = styled.div`
     text-align: center;
 `;
 
@@ -27,19 +27,15 @@ export class CustomerTransactionComponent extends React.PureComponent<CustomerTr
                     <ListTitle>
                         <Flex>
                             <Flex.Item>
-                                <ItemContent>
                                     <small>Ngày</small>
-                                </ItemContent>
                             </Flex.Item>
                             <Flex.Item>
-                                <ItemContent>
+                                <Center>
                                     <small>Loại</small>
-                                </ItemContent>
+                                </Center>
                             </Flex.Item>
-                            <Flex.Item>
-                                <ItemContent>
+                            <Flex.Item style={{textAlign: 'right'}}>
                                     <small>Số tiền</small>
-                                </ItemContent>
                             </Flex.Item>
                         </Flex>
                     </ListTitle>
@@ -60,14 +56,12 @@ export class CustomerTransactionComponent extends React.PureComponent<CustomerTr
                         <small>{formatDate(customerTransaction.created, 'DD/MM/YYYY HH:MM')}</small>
                     </Flex.Item>
                     <Flex.Item>
-                        <ItemContent>
+                        <Center>
                             <small>{this.renderPaymentType(customerTransaction.paymentType)}</small>
-                        </ItemContent>
+                        </Center>
                     </Flex.Item>
-                    <Flex.Item>
-                        <ItemContent>
+                    <Flex.Item style={{textAlign: 'right'}}>
                             <small>{formatCurrency(customerTransaction.total)}</small>
-                        </ItemContent>
                     </Flex.Item>
                 </Flex>
             </List.Item>

@@ -1,1 +1,1 @@
-export * from './CustomerBookingItem';
+export * from './CustomerBookingComponent';

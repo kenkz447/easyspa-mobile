@@ -28,13 +28,12 @@ export class CustomerDetail extends React.PureComponent<CustomerDetailOwnProps> 
         ];
         return (
             <React.Fragment>
-                <Card>
-                    <Card.Body>
-                        <h2>{customer.name}</h2>
-                        <CustomerInfo>{customer.mobile || 'Chưa có SĐT'}</CustomerInfo>
-                        <CustomerInfo>{customer.email || 'Chưa có email'}</CustomerInfo>
-                    </Card.Body>
-                </Card>
+                <div style={{textAlign: 'center'}}>
+                    <h2>{customer.name}</h2>
+                    <CustomerInfo>{customer.mobile || 'Chưa có SĐT'}</CustomerInfo>
+                    <CustomerInfo>{customer.email || 'Chưa có email'}</CustomerInfo>
+                </div>
+
                 <Tabs tabs={tabs}>
                     <CustomerOverviewContainer customerId={customer.id} />
                     <CustomerBookingContainer customerId={customer.id} />
