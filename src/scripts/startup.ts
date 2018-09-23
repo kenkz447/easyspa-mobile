@@ -13,6 +13,7 @@ import { loginPath } from '@/configs';
 import { Authenticator } from '@/domain';
 import {
     RouteBookingDetailLoadable,
+    RouteBookingNewLoadable,
     RouteBookingsLoadable,
     RouteCashierLoadable,
     RouteCustomerDetailLoadable,
@@ -33,7 +34,8 @@ export function startup() {
         RouteBookingDetailLoadable,
         RouteCashierLoadable,
         RouteWorkingSchedulerLoadable,
-        RouteStaffWorkingsLoadable
+        RouteStaffWorkingsLoadable,
+        RouteBookingNewLoadable
     ];
 
     const middlewares = applyMiddleware(appContextServiceMiddleware);

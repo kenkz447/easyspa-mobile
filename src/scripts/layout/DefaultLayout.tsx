@@ -68,7 +68,6 @@ const DefaultLayoutContent = styled.div`
     height: 100vh;
     margin: 0 auto;
     background: #fff;
-    max-width: 414px;
     width: 100%;
 `;
 

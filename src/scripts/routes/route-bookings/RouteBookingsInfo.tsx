@@ -15,6 +15,6 @@ export const routeBookingsInfo: RouteInfo = {
     icon: bookingIcon,
     isActive: () => {
         const currentPath = window.location.pathname;
-        return currentPath === routeBookingsInfo.path;
+        return currentPath.includes(routeBookingsInfo.path);
     }
 };
