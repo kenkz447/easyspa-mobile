@@ -16,7 +16,7 @@ import { formatDate } from '@/utilities';
 
 import { ListTitle } from './customer-booking-container';
 
-const ItemContent = styled.div`
+const Center = styled.div`
     text-align: center;
 `;
 
@@ -59,19 +59,15 @@ export class CustomerServicePackageContainer extends React.PureComponent<Custome
                                 <ListTitle>
                                     <Flex>
                                         <Flex.Item>
-                                            <ItemContent>
                                                 <small>Tên dịch vụ</small>
-                                            </ItemContent>
                                         </Flex.Item>
                                         <Flex.Item>
-                                            <ItemContent>
+                                            <Center>
                                                 <small>Số lần sử dụng</small>
-                                            </ItemContent>
+                                            </Center>
                                         </Flex.Item>
-                                        <Flex.Item>
-                                            <ItemContent>
+                                        <Flex.Item style={{textAlign: 'right'}}>
                                                 <small>Hết hạn</small>
-                                            </ItemContent>
                                         </Flex.Item>
                                     </Flex>
                                 </ListTitle>
@@ -96,14 +92,14 @@ export class CustomerServicePackageContainer extends React.PureComponent<Custome
                         <small>{customerServicePackage.servicePackage.name}</small>
                     </Flex.Item>
                     <Flex.Item>
-                        <ItemContent>
+                        <Center>
                             <small>{customerServicePackage.numbersOfUse}</small>
-                        </ItemContent>
+                        </Center>
                     </Flex.Item>
                     <Flex.Item>
-                        <ItemContent>
+                        <Center>
                             <small>{formatDate(customerServicePackage.expiryDate, 'DD/MM/YYYY HH:MM')}</small>
-                        </ItemContent>
+                        </Center>
                     </Flex.Item>
                 </Flex>
             </List.Item>

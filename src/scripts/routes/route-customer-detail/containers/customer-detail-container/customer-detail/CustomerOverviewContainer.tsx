@@ -73,14 +73,13 @@ export class CustomerOverviewContainer extends React.PureComponent<CustomerOverv
     private renderUI(data: Response) {
         return (
             <OverviewList>
-                <WhiteSpace />
                 <List>
                     <List.Item>
                         <Flex>
                             <Flex.Item>
                                 Tổng số lần đặt trước
                             </Flex.Item>
-                            <Flex.Item>
+                            <Flex.Item style={{ textAlign: 'right' }}>
                                 <Item>{data.totalBooking}</Item>
                             </Flex.Item>
                         </Flex>
@@ -90,7 +89,7 @@ export class CustomerOverviewContainer extends React.PureComponent<CustomerOverv
                             <Flex.Item>
                                 Tổng số lần đến
                             </Flex.Item>
-                            <Flex.Item>
+                            <Flex.Item style={{ textAlign: 'right' }}>
                                 <Item>{data.totalCheckinBooking}</Item>
                             </Flex.Item>
                         </Flex>
@@ -100,7 +99,7 @@ export class CustomerOverviewContainer extends React.PureComponent<CustomerOverv
                             <Flex.Item>
                                 Tổng số lần huỷ
                             </Flex.Item>
-                            <Flex.Item>
+                            <Flex.Item style={{ textAlign: 'right' }}>
                                 <Item>{data.totalCancelBooking}</Item>
                             </Flex.Item>
                         </Flex>
@@ -110,15 +109,19 @@ export class CustomerOverviewContainer extends React.PureComponent<CustomerOverv
                             <Flex.Item>
                                 Ghé thăm lần cuối
                             </Flex.Item>
-                            <Flex.Item>
-                                <Item>{formatDate(data.lastTimeVisit!, 'DD/MM/YYYY HH:MM')}</Item>
+                            <Flex.Item style={{ textAlign: 'right' }}>
+                                <Item>
+                                    {
+                                        data.lastTimeVisit ? formatDate(data.lastTimeVisit, 'DD/MM/YYYY HH:MM')
+                                            : 'Chưa ghé thăm'
+                                    }
+                                </Item>
                             </Flex.Item>
                         </Flex>
                     </List.Item>
                 </List>
-                <WhiteSpace />
                 <Accordion accordion={false}>
-                    <Accordion.Panel header="Yêu thích">
+                    <Accordion.Panel header="Yêu thích" style={{ margin: 0, border: 'none' }}>
                         {
                             data.topFavorites!.map(
                                 (favouriteItem, index) => {
@@ -129,7 +132,7 @@ export class CustomerOverviewContainer extends React.PureComponent<CustomerOverv
                                                 <Flex.Item>
                                                     <Item>{favouriteItem.item.name}</Item>
                                                 </Flex.Item>
-                                                <Flex.Item>
+                                                <Flex.Item style={{ textAlign: 'right' }}>
                                                     <Item>{favouriteItem.numberOfItem}</Item>
                                                 </Flex.Item>
                                             </Flex>
