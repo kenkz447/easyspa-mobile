@@ -21,7 +21,7 @@ interface FormatCurrencyValue {
     readonly rate: number;
 }
 
-export function formatCurrency(value: number | FormatCurrencyValue) {
+export function formatCurrency(value: number | undefined | FormatCurrencyValue) {
     let amount = 0;
     let sourceCurrency: string | null = null;
     let rate = 1;

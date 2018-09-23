@@ -1,1 +1,1 @@
-export * from './NewBookingFormStep01';
+export * from './NewBookingForm';

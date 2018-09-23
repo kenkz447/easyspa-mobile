@@ -5,7 +5,7 @@ import { Facility } from './facility';
 import { Service } from './service';
 import { Staff } from './staff';
 
-export type CustomerType = 'SIGNLE' | 'GROUP';
+export type CustomerType = 'SINGLE' | 'GROUP';
 
 export interface AppointmentContent extends RecordType {
     readonly appointmentCustomerType: CustomerType;
@@ -17,7 +17,7 @@ export interface AppointmentContent extends RecordType {
     readonly appointmentHour: number;
     readonly appointmentMinute: number;
 
-    readonly customerName: string;
+    readonly customerName?: string;
     readonly humanStage?: string;
     readonly id?: number;
 

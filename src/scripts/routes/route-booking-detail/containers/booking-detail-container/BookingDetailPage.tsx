@@ -84,9 +84,20 @@ export class BookingDetailPage extends React.PureComponent<BookingDetailPageProp
                         </Flex.Item>
                     </Flex>
                     <AntdDivider />
+                    <Flex>
+                        <Flex.Item>
+                            <span>TỔNG TIỀN</span>
+                        </Flex.Item>
+                        <Flex.Item>
+                            <div style={{ textAlign: 'right' }}>
+                                <BookingPrice price={booking.totalAmount || 0} />
+                            </div>
+                        </Flex.Item>
+                    </Flex>
                     {
                         transactionDTO && (
                             <div>
+                                <AntdDivider dashed={true} />
                                 <p>THÔNG TIN THANH TOÁN</p>
                                 {
                                     transactionDTO.paymentMethodDTOS.map(payment => {
@@ -109,17 +120,6 @@ export class BookingDetailPage extends React.PureComponent<BookingDetailPageProp
                             </div>
                         )
                     }
-                    <AntdDivider dashed={true} />
-                    <Flex>
-                        <Flex.Item>
-                            <span>TỔNG TIỀN</span>
-                        </Flex.Item>
-                        <Flex.Item>
-                            <div style={{ textAlign: 'right' }}>
-                                <BookingPrice price={booking.totalAmount} />
-                            </div>
-                        </Flex.Item>
-                    </Flex>
                 </div>
                 <WhiteSpace size="xl" />
             </BookingDetailPageWrapper>

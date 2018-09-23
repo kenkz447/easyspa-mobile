@@ -51,7 +51,7 @@ export function BookingPreviewCard(props: BookingPreviewCardProps) {
             </Card.Body>
             <Card.Footer
                 content={<BookingCustomerName>{booking.name}</BookingCustomerName>}
-                extra={<BookingPrice price={booking.totalAmount} />}
+                extra={<BookingPrice price={booking.totalAmount || 0} />}
             />
         </Card>
     );

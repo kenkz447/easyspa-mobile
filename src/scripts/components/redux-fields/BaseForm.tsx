@@ -7,9 +7,10 @@ interface BaseFormProps {
 
 type LoginFormProps<FormValues, FormProps> = InjectedFormProps<FormValues, FormProps>;
 
-export class BaseForm<FormValues, FormProps> extends React.PureComponent<
+export class BaseForm<FormValues, FormProps, S = {}> extends React.PureComponent<
     BaseFormProps &
     FormProps &
-    LoginFormProps<FormValues, FormProps>> {
+    LoginFormProps<FormValues, FormProps>,
+    S> {
 
 }

@@ -7,9 +7,8 @@ import { withAppContext } from '@/app';
 import { Loading } from '@/components';
 import { NoContent } from '@/components/domain-components/generic/NoContent';
 import { DomainContext } from '@/domain';
-import { AppointmentStatus, restfulFetcher, restfulStore } from '@/restful';
+import { restfulFetcher, restfulStore } from '@/restful';
 import {
-    Booking,
     bookingResources,
     GetBookingBySpaBranchPayload
 } from '@/restful/resources/booking';
@@ -42,7 +41,7 @@ CashierBookingsContainerState> {
             paid: this.getCurrentStatusSearch()
         };
 
-        this._unregisterCallback = history!.listen(o => {
+        this._unregisterCallback = history!.listen(() => {
             this.setState({
                 paid: this.getCurrentStatusSearch()
             });

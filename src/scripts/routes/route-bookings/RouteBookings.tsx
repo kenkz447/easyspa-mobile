@@ -28,6 +28,7 @@ const NewBookingButton = styled.button`
     font-size: 50px;
     color: #fff;
     box-shadow: 2px 2px 5px rgba(0,0,0,.25);
+    z-index: 1;
 `;
 
 @readyState()

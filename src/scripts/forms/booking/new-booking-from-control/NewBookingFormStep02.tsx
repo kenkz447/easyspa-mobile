@@ -1,16 +1,16 @@
-import { Button, List, WhiteSpace, WingBlank } from 'antd-mobile';
-import React from 'react';
+import { Button, List, WhiteSpace } from 'antd-mobile';
+import { object } from 'prop-types';
+import * as React from 'react';
 import { Store } from 'redux';
 import {
     Field,
     FieldArray,
     formValueSelector,
-    InjectedFormProps
+    InjectedFormProps,
+    submit
 } from 'redux-form';
 
-import { withAppContext } from '@/app';
 import { RenderPickerField, RenderSwitchField } from '@/components';
-import { DomainContext } from '@/domain';
 import {
     Appointment,
     restfulFetcher,
@@ -19,19 +19,16 @@ import {
 } from '@/restful';
 import { formatCurrency } from '@/utilities';
 
-import {
-    createBookingFormName,
-    NewBookingFormStep01Props,
-    NewBookingFormValue
-} from './NewBookingFormStep01';
+import { BookingAppointmentQuantity } from './new-booking-form-step-02';
+import { NewBookingFormProps, NewBookingFormValue } from './NewBookingForm';
 
 const lodash = require('lodash');
 
 interface NewBookingFormStep02Props extends InjectedFormProps<
     NewBookingFormValue,
-    NewBookingFormStep01Props
+    NewBookingFormProps
     > {
-    readonly submit: () => void;
+    readonly prev: () => void;
 }
 
 interface NewBookingFormStep02State {
@@ -41,30 +38,23 @@ interface NewBookingFormStep02State {
     };
 }
 
-@withAppContext<DomainContext>('currentSpaBranch')
 export class NewBookingFormStep02 extends React.Component<
-NewBookingFormStep01Props & NewBookingFormStep02Props,
-NewBookingFormStep02State,
-{ readonly store: Store; }> {
-    constructor(props: NewBookingFormStep01Props & NewBookingFormStep02Props) {
+    NewBookingFormProps & NewBookingFormStep02Props,
+    NewBookingFormStep02State,
+    { readonly store: Store; }> {
+
+    static readonly contextTypes = {
+        store: object
+    };
+
+    readonly context: {
+        readonly store: Store;
+    };
+
+    // tslint:disable-next-line:no-any
+    constructor(props: NewBookingFormProps & NewBookingFormStep02Props, context: any) {
         super(props);
-        const store = this.context;
-        const selector = formValueSelector(createBookingFormName);
-        const totalCustomer = +selector(store.getState(), 'totalCustomer');
-
-        const appointments: Partial<Appointment>[] = [];
-        for (let index = 0; index < totalCustomer; index++) {
-            appointments.push({
-                // tslint:disable-next-line:no-any
-                appointmentContents: [{}] as any
-            });
-        }
-
-        this.props.change('appointments', appointments);
-
-        // * Function binds
-        this.renderAppointments = this.renderAppointments.bind(this);
-        this.renderAppointmentContents = this.renderAppointmentContents.bind(this);
+        this.context = context;
 
         // * init component state
         this.fetchServices();
@@ -74,68 +64,72 @@ NewBookingFormStep02State,
     }
 
     render() {
-        if (!this.state.services) {
+        const { services } = this.state;
+        if (!services.length) {
             return null;
         }
 
-        const { submit } = this.props;
+        const { submitting } = this.props;
+
         return (
             <div>
-                <List renderHeader={() => 'Tùy chọn'}>
+                <List renderHeader="Tùy chọn">
+                    <BookingAppointmentQuantity
+                        store={this.context.store}
+                        fieldName={nameof<NewBookingFormValue>(o => o.totalCustomer)}
+                    />
                     <List.Item extra={<Field name="oneForAll" component={RenderSwitchField} />}>
                         <span>Dịch vụ giống nhau</span>
                     </List.Item>
                 </List>
+                <WhiteSpace size="xl" />
                 <FieldArray
                     name="appointments"
                     component={this.renderAppointments}
                 />
-                <WingBlank>
-                    <WhiteSpace />
-                    <Field
-                        name="totalPrice"
-                        component={({ input }) => {
-                            return (
-                                <Button
-                                    type="primary"
-                                    onClick={submit}
-                                >
-                                    Hoàn tất {input.value && `(${formatCurrency(input.value)}) vnđ`}
-                                </Button>
-                            );
-                        }}
-                    />
-                    <WhiteSpace />
-                </WingBlank>
+                <WhiteSpace size="xl" />
+                <Field
+                    name="totalPrice"
+                    component={({ input }) => {
+                        return (
+                            <Button
+                                type="primary"
+                                loading={submitting}
+                                onClick={() => {
+                                    const submitAction = submit('booking-form');
+                                    this.context.store.dispatch(submitAction);
+                                }}
+                            >
+                                Hoàn tất {input.value && `(${formatCurrency(input.value)}) vnđ`}
+                            </Button>
+                        );
+                    }}
+                />
+                <WhiteSpace />
             </div>
         );
     }
 
     readonly renderAppointments = ({ fields }) => {
         return fields.map((field, appointmentIndex) => {
-
             const renderHeader = (
                 <Field
                     name={`${field}.title`}
                     component={({ input }) => {
                         return (
-                            <div style={{ backgroundColor: '#F5F5F9' }}>
-                                <WhiteSpace />
-                                <WingBlank>
-                                    <div style={{ flex: 1 }}>
-                                        <span>
-                                            {`Khách #${appointmentIndex + 1}`}
-                                        </span>
-                                    </div>
-                                    {
-                                        input.value ? (
-                                            <div style={{ flex: 1, alignItems: 'flex-end' }}>
-                                                <span>{input.value}</span>
-                                            </div>
-                                        ) : null
-                                    }
-                                </WingBlank>
-                                <WhiteSpace />
+                            <div>
+                                <div style={{ flex: 1 }}>
+                                    <span>
+                                        {`Khách hàng #${appointmentIndex + 1}`}
+                                    </span>
+                                </div>
+                                {
+                                    input.value ? (
+                                        <div style={{ flex: 1, alignItems: 'flex-end' }}>
+                                            <span>{input.value}</span>
+                                        </div>
+                                    ) : null
+                                }
                             </div>
                         );
                     }}
@@ -152,20 +146,20 @@ NewBookingFormStep02State,
                         component={this.renderAppointmentContents}
                         appointmentIndex={appointmentIndex}
                     />
-                    <List.Item
-                        extra={(
-                            <Button
-                                size="small"
-                                type="primary"
-                                onClick={() => {
-                                    this.addAppoimentContent(appointmentIndex);
-                                }}
-                            >
-                                thêm +
-                            </Button>
-                        )}
-                    >
-                        Thêm dịch vụ
+                    <List.Item>
+                        <Button
+                            size="small"
+                            type="primary"
+                            onClick={() => {
+                                this.addAppoimentContent(appointmentIndex);
+                            }}
+                            style={{
+                                color: '#096dd9',
+                                backgroundColor: '#fff',
+                            }}
+                        >
+                            Thêm dịch vụ +
+                        </Button> 
                     </List.Item>
                 </List>
             );
@@ -182,19 +176,24 @@ NewBookingFormStep02State,
                     inputProps={{
                         extra: 'Chọn',
                         data: this.state.groupServices,
-                        onChange: (values: string[]) =>
-                            this.oneForAllHandler(appointmentIndex, appointmentContentIndex, values),
-                        formatValues: (values: string[]) => {
+                        onChange: (values: string[]) => {
+                            this.oneForAllHandler(
+                                appointmentIndex,
+                                appointmentContentIndex,
+                                values
+                            );
+                        },
+                        format: (values: string[]) => {
                             if (values.length) {
                                 return `${values[2]} phút`;
                             }
                         },
-                        placeholder: (value) => (
+                        children: (value) => (
                             <List.Item arrow="horizontal" >
                                 {
                                     value[1] ?
                                         (<span>{value[1]}</span>) :
-                                        (<span>Trống</span>)
+                                        (<span>Chọn dịch vụ</span>)
                                 }
                                 {
                                     appointmentContentIndex !== 0 && (
@@ -263,11 +262,11 @@ NewBookingFormStep02State,
         });
     }
 
-    groupServicesByTime(services: {
+    readonly groupServicesByTime = (services: {
         readonly label: string;
         readonly value: number;
         readonly children: {};
-    }) {
+    }) => {
         const chain = lodash(services)
             .groupBy('label')
             .toPairs()
@@ -283,54 +282,59 @@ NewBookingFormStep02State,
         return chain.value();
     }
 
-    async deleteAppointmentContent(appointmentIndex: number, appointmentContentIndex: number) {
-        const { change } = this.props;
-        const store = this.context;
-        const selector = formValueSelector(createBookingFormName);
-        const oneForAll = +selector(store.getState(), 'oneForAll');
+    readonly deleteAppointmentContent =
+        async (
+            appointmentIndex: number,
+            appointmentContentIndex: number
+        ) => {
+            const { change } = this.props;
+            const { store } = this.context;
+            const selector = formValueSelector('booking-form');
+            const oneForAll = +selector(store.getState(), 'oneForAll');
 
-        const allAppointments = [...selector(store.getState(), 'appointments')];
+            const allAppointments = [...selector(store.getState(), 'appointments')];
 
-        if (oneForAll) {
-            for (let index = 0; index < allAppointments.length; index++) {
-                const appointment = allAppointments[index];
+            if (oneForAll) {
+                for (let index = 0; index < allAppointments.length; index++) {
+                    const appointment = allAppointments[index];
 
-                const nextAppointmentContents = appointment.appointmentContents.filter(
+                    const nextAppointmentContents = appointment.appointmentContents.filter(
+                        (appointmentContents, appointmentContentLoopingIndex) =>
+                            appointmentContentIndex !== appointmentContentLoopingIndex
+                    );
+
+                    change(
+                        `appointments[${index}].appointmentContents`,
+                        nextAppointmentContents
+                    );
+
+                    appointment.appointmentContents = nextAppointmentContents;
+                }
+            } else {
+                const _appointment = allAppointments[appointmentIndex];
+                const _nextAppointmentContents = _appointment.appointmentContents.filter(
                     (appointmentContents, appointmentContentLoopingIndex) =>
-                        appointmentContentIndex !== appointmentContentLoopingIndex
-                );
+                        appointmentContentIndex !== appointmentContentLoopingIndex);
 
                 change(
-                    `appointments[${index}].appointmentContents`,
-                    nextAppointmentContents
+                    `appointments[${appointmentIndex}].appointmentContents`,
+                    _nextAppointmentContents
                 );
 
-                appointment.appointmentContents = nextAppointmentContents;
+                _appointment.appointmentContents = _nextAppointmentContents;
             }
-        } else {
-            const _appointment = allAppointments[appointmentIndex];
-            const _nextAppointmentContents = _appointment.appointmentContents.filter(
-                (appointmentContents, appointmentContentLoopingIndex) =>
-                    appointmentContentIndex !== appointmentContentLoopingIndex);
 
-            change(
-                `appointments[${appointmentIndex}].appointmentContents`,
-                _nextAppointmentContents
-            );
-
-            _appointment.appointmentContents = _nextAppointmentContents;
+            this.calcTimeAndPriceForAppointments(allAppointments);
         }
 
-        this.calcTimeAndPriceForAppointments(allAppointments);
-    }
-
-    addAppoimentContent(currentAppointmentIndex: number) {
+    readonly addAppoimentContent = (currentAppointmentIndex: number) => {
         const { change } = this.props;
-        const store = this.context;
-        const selector = formValueSelector(createBookingFormName);
-        const oneForAll = +selector(store.getState(), 'oneForAll');
+        const { store } = this.context;
+        const reduxState = store.getState();
+        const selector = formValueSelector('booking-form');
+        const oneForAll = +selector(reduxState, 'oneForAll');
 
-        const allAppointments = selector(store.getState(), 'appointments');
+        const allAppointments = selector(reduxState, 'appointments');
 
         const initAppointmentContent = {};
 
@@ -351,32 +355,37 @@ NewBookingFormStep02State,
         }
     }
 
-    oneForAllHandler(appointmentIndex: number, appointmentContentIndex: number, values: string[]) {
+    readonly oneForAllHandler = (
+        appointmentIndex: number,
+        appointmentContentIndex: number,
+        values: string[]
+    ) => {
         const { change } = this.props;
         const { services } = this.state;
 
-        const store = this.context;
-        const selector = formValueSelector(createBookingFormName);
-        const oneForAll = +selector(store.getState(), 'oneForAll');
+        const { store } = this.context;
+        const reduxState = store.getState();
+        const selector = formValueSelector('booking-form');
+        const oneForAll = +selector(reduxState, 'oneForAll');
 
-        const allAppointments = [...selector(store.getState(), 'appointments')];
+        const allAppointments = [...selector(reduxState, 'appointments')];
 
         if (oneForAll) {
             for (let index = 0; index < allAppointments.length; index++) {
                 const appointment = allAppointments[index];
-                const appointmentContents = appointment.appointmentContents[appointmentContentIndex];
+                const appointmentContent = appointment.appointmentContents[appointmentContentIndex];
                 const serviceId = +values[2];
-                appointmentContents.service = services.find(o => o.id === serviceId);
+                appointmentContent.service = services.find(o => o.id === serviceId);
 
                 if (index === appointmentContentIndex) {
                     continue;
                 }
 
-                appointmentContents.serviceId = values;
+                appointmentContent.serviceId = values;
 
                 change(
                     `appointments[${appointmentIndex}].appointmentContents[${appointmentContentIndex}]`,
-                    { ...appointmentContents }
+                    { ...appointmentContent }
                 );
             }
         } else {
@@ -384,12 +393,13 @@ NewBookingFormStep02State,
             const currentAppointment = allAppointments[appointmentIndex];
             const currentAppointmentContent = currentAppointment.appointmentContents[appointmentContentIndex];
             currentAppointmentContent.service = services.find(o => o.id === serviceId);
+            currentAppointmentContent.serviceId = values;
         }
 
         this.calcTimeAndPriceForAppointments(allAppointments);
     }
 
-    calcTimeAndPriceForAppointments(appointments: Appointment[]) {
+    readonly calcTimeAndPriceForAppointments = (appointments: Appointment[]) => {
         const { change } = this.props;
         const { services } = this.state;
         let bookingTotalPrice = 0;
@@ -435,10 +445,7 @@ NewBookingFormStep02State,
             bookingTotalPrice += price;
             change(`appointments[${index}].title`, `${time} phút - ${formatCurrency(price)}`);
         }
-        change(`totalPrice`, bookingTotalPrice);
-    }
 
-    reCalcAppointmentContentHourAndMinute() {
-        // ..
+        change(`totalPrice`, bookingTotalPrice);
     }
 }

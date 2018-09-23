@@ -30,7 +30,7 @@ export const serviceResourceType = new ResourceType<Service>({
 export const serviceResources = {
     getBySpaBranch: new Resource<{ readonly content: Service[] }>({
         resourceType: serviceResourceType,
-        url: apiEntry('productservice/api/services/spa-branch/:spaBranchId'),
+        url: apiEntry('/productservice/api/services/spa-branch/:spaBranchId'),
         method: 'GET',
         mapDataToStore: (response, resourceType, store) => {
             for (const service of response.content) {

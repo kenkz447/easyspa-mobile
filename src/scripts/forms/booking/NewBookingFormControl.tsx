@@ -1,29 +1,51 @@
 import * as React from 'react';
 
 import { withAppContext } from '@/app';
+import { fetchErrorHandler } from '@/components';
 import { DomainContext } from '@/domain';
-import { Appointment } from '@/restful';
+import {
+    Appointment,
+    Booking,
+    bookingResources,
+    restfulFetcher
+} from '@/restful';
+import { AppointmentContent } from '@/restful/resources/appointment-content';
+import { getBookingDetailUrl } from '@/routes';
 
-import { NewBookingForm } from './new-booking-from-control';
+import {
+    NewBookingForm,
+    NewBookingFormValue
+} from './new-booking-from-control';
 
 export interface NewBookingFormControlProps extends
+    Pick<DomainContext, 'history'>,
     Pick<DomainContext, 'currentSpa'>,
     Pick<DomainContext, 'currentSpaBranch'> {
 }
 
-@withAppContext<DomainContext>('currentSpa', 'currentSpaBranch')
+@withAppContext<DomainContext>('history', 'currentSpa', 'currentSpaBranch')
 export class NewBookingFormControl extends React.PureComponent<NewBookingFormControlProps> {
     public render() {
         const { currentSpaBranch } = this.props;
         return (
             <NewBookingForm
-                next={() => null}
+                onSubmitSuccess={this.onSubmitSuccess}
+                onSubmit={this.onSubmit}
                 spaBranch={currentSpaBranch!}
+                initialValues={{
+                    totalCustomer: ['1'],
+                    appointments: [{
+                        appointmentContents: [{
+
+                        }]
+                        // tslint:disable-next-line:no-any
+                    }] as any
+                }}
             />
         );
     }
 
-    readonly onSubmit = (formValues) => {
+    readonly onSubmit = async (formValues: NewBookingFormValue) => {
         const { currentSpa, currentSpaBranch } = this.props;
 
         const spaId = currentSpa!.id;
@@ -36,6 +58,7 @@ export class NewBookingFormControl extends React.PureComponent<NewBookingFormCon
         const bookingDay = formValues.date.getDate();
         const bookingHour = formValues.dayTime.getHours();
         const bookingMinute = formValues.dayTime.getMinutes();
+
         const bookingDate = new Date(bookingYears, bookingMonth, bookingDay, bookingHour, bookingMinute, 0);
 
         const appointments: Appointment[] = [];
@@ -69,7 +92,7 @@ export class NewBookingFormControl extends React.PureComponent<NewBookingFormCon
                 day: bookingDay,
                 hour: bookingHour,
                 minute: bookingMinute,
-                appointmentContents: appointment.appointmentContents.map((appointmentContent) => {
+                appointmentContents: appointment.appointmentContents.map((appointmentContent): AppointmentContent => {
                     const appointmentContentHour = appointmentContentDate.getHours();
                     const appointmentContentMinute = appointmentContentDate.getMinutes();
 
@@ -99,7 +122,7 @@ export class NewBookingFormControl extends React.PureComponent<NewBookingFormCon
             });
         }
 
-        const newBooking = {
+        const newBooking: Booking = {
             appointmentStatus: appointmentStatus,
             appointments: appointments,
             bookingCustomerType: 'SINGLE',
@@ -112,16 +135,34 @@ export class NewBookingFormControl extends React.PureComponent<NewBookingFormCon
             totalCustomer: totalCustomer,
 
             customerId: formValues.customerId,
-            name: formValues.name || 'Khách vãng lai',
-            email: formValues.email,
-            phone: formValues.mobile,
+            name: formValues.customer!.name || 'Khách vãng lai',
+            email: formValues.customer!.email,
+            phone: formValues.customer!.mobile,
+            note: formValues.note,
+            bookingColor: '#108EE9',
 
             spaId: spaId,
             spaBranchId: spaBranchId
         };
+        try {
+            return await restfulFetcher.fetchResource(
+                bookingResources.createBooking,
+                [{
+                    type: 'body',
+                    value: newBooking
+                }]
+            );
+        } catch (error) {
+            throw fetchErrorHandler(error);
+        }
     }
 
-    readonly onSubmitSuccess = (booking) => {
-        // ...
+    private readonly onSubmitSuccess = (booking) => {
+        const { history } = this.props;
+        const bookingDetailUrl = getBookingDetailUrl({
+            bookingId: booking.id
+        });
+
+        history!.push(bookingDetailUrl);
     }
 }

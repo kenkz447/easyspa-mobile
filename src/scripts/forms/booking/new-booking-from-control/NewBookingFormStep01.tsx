@@ -1,39 +1,39 @@
-import { Button, List, WhiteSpace, WingBlank } from 'antd-mobile';
-import { Moment } from 'moment';
+import { Button, List, WhiteSpace } from 'antd-mobile';
 import * as React from 'react';
-import { Field, Form, reduxForm } from 'redux-form';
+import { Field, Form, InjectedFormProps } from 'redux-form';
 
-import { RenderDatePickerField, RenderInput } from '@/components';
-import { BaseForm } from '@/components/redux-fields/BaseForm';
-import { Booking, SpaBranch } from '@/restful';
+import { RenderDatePickerField, RenderInput, required } from '@/components';
 
-export const createBookingFormName = 'booking-form';
+import { NewBookingFormProps, NewBookingFormValue } from './NewBookingForm';
 
-export interface NewBookingFormValue extends Booking {
-    readonly dayTime: Moment;
-}
-
-export interface NewBookingFormStep01Props {
-    readonly spaBranch: SpaBranch;
+interface NewBookingFormStep01Props extends InjectedFormProps<
+    NewBookingFormValue,
+    NewBookingFormProps
+    > {
     readonly next: () => void;
 }
+export class NewBookingFormStep01 extends React.Component<
+    NewBookingFormProps & NewBookingFormStep01Props> {
+    private readonly nameRequired = required('Nhập tên khách hàng');
+    private readonly dateRequired = required('Nhập ngày tháng');
+    private readonly timeRequired = required('Nhập thời gian');
 
-export class NewBookingFormStep01Component extends BaseForm<NewBookingFormValue, NewBookingFormStep01Props> {
     render() {
         const { invalid, next } = this.props;
         return (
-            <Form>
+            <React.Fragment>
                 <List renderHeader={() => 'Thông tin khách hàng'}>
                     <Field
-                        name={nameof<NewBookingFormValue>(o => o.customer.name)}
+                        name={nameof.full<NewBookingFormValue>(o => o.customer!.name)}
                         component={RenderInput}
+                        validate={this.nameRequired}
                         inputProps={{
                             children: <img src="/static/assets/search.png" />,
                             placeholder: 'Nhập tên khách hàng'
                         }}
                     />
                     <Field
-                        name={nameof<NewBookingFormValue>(o => o.customer.mobile)}
+                        name={nameof.full<NewBookingFormValue>(o => o.customer!.mobile)}
                         component={RenderInput}
                         inputProps={{
                             children: <img src="/static/assets/phone.png" />,
@@ -41,7 +41,7 @@ export class NewBookingFormStep01Component extends BaseForm<NewBookingFormValue,
                         }}
                     />
                     <Field
-                        name={nameof<NewBookingFormValue>(o => o.customer.email)}
+                        name={nameof.full<NewBookingFormValue>(o => o.customer!.email)}
                         component={RenderInput}
                         type="email"
                         inputProps={{
@@ -54,6 +54,7 @@ export class NewBookingFormStep01Component extends BaseForm<NewBookingFormValue,
                     <Field
                         name={nameof<NewBookingFormValue>(o => o.date)}
                         component={RenderDatePickerField}
+                        validate={this.dateRequired}
                         inputProps={{
                             mode: 'date',
                             children: (
@@ -66,6 +67,7 @@ export class NewBookingFormStep01Component extends BaseForm<NewBookingFormValue,
                     <Field
                         name={nameof<NewBookingFormValue>(o => o.dayTime)}
                         component={RenderDatePickerField}
+                        validate={this.timeRequired}
                         inputProps={{
                             mode: 'time',
                             children: (
@@ -85,12 +87,7 @@ export class NewBookingFormStep01Component extends BaseForm<NewBookingFormValue,
                     Chọn dịch vụ
                 </Button>
                 <WhiteSpace />
-            </Form>
+            </React.Fragment>
         );
     }
 }
-
-export const NewBookingForm = reduxForm<Booking, NewBookingFormStep01Props>({
-    form: createBookingFormName,
-    destroyOnUnmount: false
-})(NewBookingFormStep01Component);

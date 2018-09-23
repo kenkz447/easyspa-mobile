@@ -13,8 +13,8 @@ const groupBy = require('lodash/groupBy');
 const map = require('lodash/map');
 
 export interface Booking {
-    readonly id: number;
-    readonly code: string;
+    readonly id?: number;
+    readonly code?: string;
     readonly date: string;
     readonly hour: number;
     readonly minute: number;
@@ -26,15 +26,12 @@ export interface Booking {
     readonly phone: string;
     readonly spaBranchId: number;
     readonly spaId: number;
-    readonly totalAdult: number;
-    readonly totalAmount: number;
-    readonly totalAmountText: string;
+    readonly totalAmount?: number;
     readonly totalCustomer: number;
-    readonly totalKids: number;
     readonly appointments: Array<Appointment>;
     readonly appointmentStatus: AppointmentStatus;
-    readonly customerId: number;
-    readonly customer: Customer;
+    readonly customerId?: number;
+    readonly customer?: Customer;
     readonly bookingCustomerType?: 'SINGLE' | 'GROUP';
     readonly country?: string;
     readonly bookingColor: string;
@@ -102,7 +99,15 @@ export const bookingResources = {
                 store.dataMapping(resourceTYpe, booking);
             }
         }
-    })
+    }),
+    createBooking: new Resource<Booking>({
+        resourceType: bookingResourceType,
+        url: apiEntry('/bookingservice/api/bookings'),
+        method: 'POST',
+        mapDataToStore: (booking, resourceTYpe, store) => {
+            store.dataMapping(resourceTYpe, booking);
+        }
+    }),
 };
 
 export const bookingUtils = {

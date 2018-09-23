@@ -34,7 +34,7 @@ export class CashierBookingList extends React.PureComponent<CashierBookingListPr
                             parameters={[{
                                 type: 'path',
                                 parameter: 'id',
-                                value: booking.id
+                                value: booking.id!
                             }]}
                             render={(renderProps) => {
                                 const { data, fetching } = renderProps;
@@ -44,7 +44,7 @@ export class CashierBookingList extends React.PureComponent<CashierBookingListPr
                                 }
 
                                 const toBookingDetailPath = getBookingDetailUrl({
-                                    bookingId: booking.id
+                                    bookingId: booking.id!
                                 });
 
                                 return (
